@@ -1,0 +1,13 @@
+<!-- reception_detail.html -->
+
+<h2>Reception Details for {{ reception.patient_name.full_name }}</h2>
+<p>Date: {{ reception.date }}</p>
+<p>Time: {{ reception.time }}</p>
+<!-- Display more detailed information -->
+
+<!-- Form or link to add a diagnosis -->
+<form method="post" action="{% url 'add_diagnosis' reception.id %}">
+    {% csrf_token %}
+    <!-- Fields for diagnosis information -->
+    <input type="submit" value="Add Diagnosis">
+</form>

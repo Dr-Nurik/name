@@ -1,0 +1,16 @@
+{% extends "main base.html" %}
+{% load static %}
+
+    {% block title %}
+      {{ block.super }}Главная страница{{doctor.name|safe}}
+    {% endblock %}
+{% block content %}
+<head>
+    <br><br><br><br><br><br><br>
+
+</head>
+<body>
+    <h1>Запись на приём</h1>
+    <p>Ваш запрос на запись отправлен и ожидает подтверждения.</p>
+</body>
+    {% endblock %}

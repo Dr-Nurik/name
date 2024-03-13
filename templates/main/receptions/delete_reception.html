@@ -1,0 +1,14 @@
+{% extends 'main base.html' %}
+{% block content %}
+
+<div class="container mt-5" style="margin-top: 15rem;">
+    <h1>Удалить прием</h1>
+    <p class="lead">Вы уверены, что хотите удалить этот прием?</p>
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Удалить</button>
+        <a href="{% url 'main:unconfirmed_receptions_list' %}" class="btn btn-danger    ">Отмена</a>
+    </form>
+</div>
+
+{% endblock %}

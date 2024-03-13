@@ -1,0 +1,43 @@
+/* Reset some default styles */
+body, h1, p {
+  margin: 0;
+  padding: 0;
+}
+
+/* Basic layout styles */
+header, footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #f5f5f5;
+}
+
+.sidebar {
+  background-color: #e0e0e0;
+  padding: 1rem;
+  height: 100vh; /* Full height of the viewport */
+}
+
+main {
+  margin-left: 200px; /* Give space for the sidebar */
+}
+
+.appointment {
+  padding: 1rem;
+}
+
+/* Styling for the navigation */
+nav ul {
+  list-style-type: none;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 20px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333;
+}
+
+/* You will need to add more styles here based on your specific design requirements */

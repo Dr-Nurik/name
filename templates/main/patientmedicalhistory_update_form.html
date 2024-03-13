@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Patient Medical History</title>
+</head>
+<body>
+    <h1>Update Patient Medical History</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Update History">
+    </form>
+</body>
+</html>

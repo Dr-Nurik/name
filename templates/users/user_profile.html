@@ -1,0 +1,115 @@
+{% extends 'main base.html' %}
+
+{% block title %}
+  Личный кабинет
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-5" style="margin-top: 175px;">
+    <h1>Личный кабинет</h1>
+
+    <section class="profile-section">
+        <h2>Изменение персональных данных</h2>
+
+        <form method="post" action="{% url 'users:user_profile' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="full_name">ФИО:</label>
+                <input type="text" class="form-control" id="full_name" name="full_name" value="{{ user.full_name }}">
+                {% for error in user_form.full_name.errors %}
+                <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                <label for="date_of_birth">Дата рождения:</label>
+                <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" value="{{ user.date_of_birth|date:'Y-m-d' }}">
+                {% for error in user_form.date_of_birth.errors %}
+                <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+                {% if user.age %}
+                <p>Возраст: {{ user.age }} лет</p>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="address">Адрес:</label>
+                <input type="text" class="form-control" id="address" name="address" value="{{ user.address }}">
+                {% for error in user_form.address.errors %}
+                <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-Mail:</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
+                {% for error in user_form.email.errors %}
+                <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Телефон:</label>
+                <input type="tel" class="form-control" id="phone" name="phone" value="{{ user.phone }}">
+                {% for error in user_form.phone.errors %}
+                <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            {% if user_form.non_field_errors %}
+            <div class="text-danger">
+                {% for error in user_form.non_field_errors %}
+                {{ error }}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+        </form>
+    </section>
+
+    <div class="receptions-section mt-5">
+        <h2>Мои приемы</h2>
+        <ul class="list-group">
+            {% for reception in receptions %}
+            <li class="list-group-item">
+                <h5 class="mt-0 mb-1">Дата: {{ reception.date }}</h5>
+                <p>Время: {{ reception.time }}</p>
+                <p>Доктор: {{ reception.doctor.doctors_name.full_name }}</p>
+                <p>Причина: {{ reception.patient_info }}</p>
+                <p>Услуги:
+                    <ul class="list-unstyled">
+                        {% for service in reception.services.all %}
+                        <li>{{ service.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </p>
+            </li>
+            {% empty %}
+            <li>У вас нет запланированных приемов.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var modal = document.getElementById('zatemnenie');
+        var closeButtons = document.querySelectorAll('.close');
+
+        // Показываем модальное окно только если есть сообщения
+        {% if messages %}
+        modal.style.display = 'block';
+        {% endif %}
+
+        // Обработчик закрытия модального окна
+        closeButtons.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'main base.html' %}
+
+{% block title %}
+  Авторизация
+{% endblock title %}
+
+{% block content %}
+<!-- Background elements -->
+
+<br><br><br><br>
+<div class="background">
+  <div class="shape"></div>
+  <div class="shape"></div>
+</div>
+
+<!-- Authorization form -->
+<div class="glassmorphism-form-container">
+  <form method="post" class="glassmorphism-form">
+    {% csrf_token %}
+    <h3 class="text-center">Авторизация</h3>
+
+    <div class="form-group">
+      {{ form.username.label_tag }}
+      {{ form.username }}
+    </div>
+    <div class="form-group">
+      {{ form.password.label_tag }}
+      {{ form.password }}
+    </div>
+    <div class="form-group">
+      {{ form.email.label_tag }}
+      {{ form.email }}
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-primary btn-block create-account" type="submit">Войти</button>
+    </div>
+  </form>
+</div>
+
+</form>  </div>
+<br><br><br><br>
+{% endblock %}

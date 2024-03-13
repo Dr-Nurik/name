@@ -1,0 +1,14 @@
+{% extends 'main base.html' %}
+{% block content %}
+
+<div class="container mt-5" style="margin-top: 175px;">
+    <h1 class="mb-4">Добавить прием</h1>
+    <form method="post" class="mb-3">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Добавить</button>
+    </form>
+    <a href="{% url 'main:unconfirmed_receptions_list' %}" class="btn btn-secondary">Назад</a>
+</div>
+
+{% endblock %}

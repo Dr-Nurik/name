@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient Feedback</title>
+</head>
+<body>
+    <h1>Patient Feedback</h1>
+    <ul>
+        {% for feedback in object_list %}
+            <li>{{ feedback.patient }} - {{ feedback.feedback }}</li>
+        {% empty %}
+            <li>No feedback available.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

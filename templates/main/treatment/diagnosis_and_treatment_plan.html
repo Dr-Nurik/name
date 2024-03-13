@@ -1,0 +1,21 @@
+{% extends "main base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5" style="margin-top: 175px;">
+    {% if reception.patient_name %}
+<h1>Назначение диагноза и лечения для пациента  {{ reception.patient_name.full_name }}</h1>
+{% else %}
+    <h1>Имя незарегистрированного пациента: {{ reception.non_registered_patient_name }}</h1>
+    <p>Контакт: {{ reception.non_registered_patient_contact }}</p>
+    <p>ИИН: {{ reception.non_registered_patient_indevid_intevicat_nomer }}</p>
+{% endif %}
+
+    <form method="post" class="form-horizontal">
+        {% csrf_token %}
+        {{ diagnosis_form.as_p }}
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>
+    <a href="{% url 'main:reception_list' %}" class="btn btn-secondary">Назад</a>
+</div>
+{% endblock %}

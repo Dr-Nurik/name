@@ -1,0 +1,72 @@
+.content-wrapper {
+    display: flex;
+    flex-direction: column; /* Stack vertically */
+    align-items: center; /* Align horizontally */
+    justify-content: center; /* Align vertically */
+    padding: 40px;
+    background-color: #333; /* Change according to your color preference */
+    color: white;
+    height: 30rem;
+    width: 40rem;
+    margin: 2rem auto; /* Add margin to the top for spacing from the previous element */
+}
+
+.text-content h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-align: center; /* Center the title text */
+}
+
+.text-content p {
+    line-height: 1.5;
+    margin-bottom: 20px;
+    text-align: center; /* Center the paragraph text */
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center buttons horizontally */
+}
+
+.button {
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin-right: 10px;
+    color: white;
+    border: 2px solid white; /* Optional: can add a color for the button border */
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.button.discover {
+    background-color: transparent;
+}
+
+.button.purchase {
+    background-color: #E8CA2B;
+}
+
+.button:hover {
+    background-color: #e8ca2b;
+    border-color: #e8ca2b;
+}
+
+/* Since there's no image container in the HTML structure, this is commented out
+.slider {
+    width: 50%; /* Или любая другая пропорция в зависимости от вашего дизайна */
+    /* Стили для слайдера */
+}
+
+/* Опционально: стили для адаптивности */
+@media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column;
+    }
+    .text-content,
+    .slider {
+        width: 100%;
+    }
+}
+/* END ABOUT ClINIC */

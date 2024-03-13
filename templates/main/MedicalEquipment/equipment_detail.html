@@ -1,0 +1,37 @@
+{% extends 'main base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5" style="margin-top: 175px;">
+    <div class="card">
+        <div class="card-header">
+            <h1>Названия инвентаря: {{ equipment.name }}</h1>
+        </div>
+        <div class="card-body">
+            <p><strong>Инвентарный номер:</strong> {{ equipment.inventory_number }}</p>
+            <p><strong>Статус:</strong> {{ equipment.get_status_display }}</p>
+            <p><strong>Дата последнего обслуживания:</strong> {{ equipment.last_service_date }}</p>
+            <p><strong>Местоположение:</strong> {{ equipment.location }}</p>
+            <p><strong>Описание:</strong> {{ equipment.description }}</p>
+            <p><strong>Дата приобретения:</strong> {{ equipment.data_cupil }}</p>
+            <p><strong>Цена:</strong> ${{ equipment.price }}</p>
+
+            <div class="row">
+                {% if equipment.image %}
+                <div class="col-md-6">
+                    <img src="{{ equipment.image.url }}" alt="{{ equipment.name }}" class="img-fluid">
+                </div>
+                {% endif %}
+
+                {% if equipment.qr_code %}
+                <div class="col-md-6">
+                    <img src="{{ equipment.qr_code.url }}" alt="QR Code for {{ equipment.name }}" class="img-fluid">
+                </div>
+                {% endif %}
+            </div>
+            <br>
+                <a href="{% url 'main:medical_equipment_list' %}" class="btn btn-primary">Назад</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

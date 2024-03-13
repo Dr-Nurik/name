@@ -1,0 +1,28 @@
+{% extends 'main base.html' %}
+{% block content %}
+<div class="container mt-5" style="margin-top: 175px;">
+    <h1>Детали приема №{{ reception.id }}</h1>
+    <p><strong>Дата:</strong> {{ reception.date }}</p>
+    <p><strong>Время:</strong> {{ reception.time }}</p>
+    <p><strong>Пациент:</strong> {{ reception.patient_name }}</p>
+    <p><strong>Незарегистрированный пациент:</strong> {{ reception.non_registered_patient_name }}</p>
+    <p><strong>Контакты:</strong> {{ reception.non_registered_patient_contact }}</p>
+    <p><strong>Услуги:</strong>
+        {% for service in reception.services.all %}
+            {{ service.name }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+    </p>
+    <p><strong>Врач:</strong> {{ reception.doctor.doctors_name.full_name }}</p>
+    <p><strong>Тренажер:</strong> {{ reception.trainer.name }}</p>
+    <p><strong>Требуется массаж:</strong> {{ reception.requires_massage|yesno:"Да,Нет" }}</p>
+    <p><strong>Массажист:</strong> {{ reception.masseur.masseur_name.full_name }}</p>
+    <p><strong>Пациент прибыл:</strong> {{ reception.comed|yesno:"Да,Нет" }}</p>
+    <p><strong>Пациент отказался:</strong> {{ reception.declined|yesno:"Да,Нет" }}</p>
+    <p><strong>Пациент не пришел:</strong> {{ reception.no_show|yesno:"Да,Нет" }}</p>
+    <p><strong>Запись подтверждена:</strong> {{ reception.is_confirmed|yesno:"Да,Нет" }}</p>
+    <p><strong>Оплата подтверждена:</strong> {{ reception.payment_confirmed|yesno:"Да,Нет" }}</p>
+<a href="{% url 'main:diagnosis_and_treatment_plan' reception.pk %}"  class="btn btn-primary">Добавить диагноз и план лечения</a>
+
+
+</div>
+{% endblock %}

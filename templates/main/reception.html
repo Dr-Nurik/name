@@ -1,0 +1,196 @@
+{% extends "main/index.html" %}
+{% load static %}
+
+  <title>
+    {% block title %}
+      {{ block.super }},{{doctor.name|safe}}, запись на прием
+    {% endblock %}
+  </title>
+
+{% block content %}
+    <h3>{{ doctor.name|safe }}</h3>
+    <p>{{ doctor.specialization|safe }}</p>
+    <p>{{ doctor.info|safe }}</p>
+
+    {% if upcoming_reception %}
+        <div align="center">
+            <h3>Вы уже записаны на прием<br>
+                на {{ upcoming_reception.date }} {{ upcoming_reception.time }}
+            </h3>
+            <p><a href="#bookingForm">Запись на другую дату</a></p>
+        </div>
+    {% else %}
+        <div align="center">
+            <h3>Вы еще не записаны на прием</h3>
+        </div>
+    {% endif %}
+
+    {% if message %}
+        <div align="center">
+            <h3>{{ message }}</h3>
+        </div>
+    {% endif %}
+
+
+    <br><br>
+    <div align="center">
+      <form action="" class="form-inline" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+
+    {% if request.user.is_authenticated %}
+      <p>{{ request.user.full_name }}</p>
+    {% else %}
+        <input type="text" name="email" value="" placeholder="Ваше имя">
+        <input type="text" name="non_registered_patient_contact" value="" placeholder="Ваши контакты">
+    {% endif %}
+          <table class="table table-borderless">
+            <tr><th>{{form.date.label}}</th><td>{{form.date}}{{form.date.errors}}<br><br></td></tr>
+            <tr><th>{{form.time.label}}</th>
+            <td>
+                <table class="table table-bordered">
+                  <tr>
+                    <td align="center" valign="center" class="time">9:00</td>
+                         <td align="center" valign="center" class="time">9:30</td>
+                    <td align="center" valign="center" class="time">10:00</td>
+    <td align="center" valign="center" class="time">10:30</td>
+                    <td align="center" valign="center" class="time">11:00</td>
+                                     <td align="center" valign="center" class="time">11:30</td>
+                        <td align="center" valign="center" class="time">12:00</td>
+                  </tr>
+                  <tr>
+
+                    <td align="center" valign="center" class="time">12:30</td>
+                    <td align="center" valign="center" class="time">13:00</td>
+                                     <td align="center" valign="center" class="time">13:30</td>
+                    <td align="center" valign="center" class="time">14:00</td>
+                              <td align="center" valign="center" class="time">14:30</td>
+                          <td align="center" valign="center" class="time">15:00</td>
+                          <td align="center" valign="center" class="time">15:30</td>
+                  </tr>
+                  <tr>
+
+
+                    <td align="center" valign="center" class="time">16:00</td>
+                              <td align="center" valign="center" class="time">16:30</td>
+                    <td align="center" valign="center" class="time">17:00</td>
+                      <td align="center" valign="center" class="time">17:30</td>
+                                        <td align="center" valign="center" class="time">18:00</td>
+                                        <td align="center" valign="center" class="time">18:30</td>
+                                        <td align="center" valign="center" class="time">19:00</td>
+                  </tr>
+                </table>
+                {{form.time.errors}}
+            </td></tr>
+             <p>Запись на прием для: <strong>{{ current_user }}</strong></p>
+              <p>Выбранный врач: <strong>{{ doctor.full_name }}</strong></p>
+
+        </td>
+    </tr>
+    <tr><th>{{ form.patient_info.label }}</th><td>{{ form.patient_info }}{{ form.patient_info.errors }}<br><br></td></tr>
+     <tr><th> {{form.patient_name.label}}</th><td>{{form.patient_name}}{{form.patient_name.errors}}<br><br></td></tr>
+<p>Выберите услугу:</p>
+    <select name="service">
+         {% for service in services_list %}
+             <option value="{{ service.id }}">{{ service.name }}</option>
+         {% empty %}
+             <option>No services available</option>
+         {% endfor %}
+     </select>
+
+
+
+
+<!-- Поля для незарегистрированных пользователей -->
+            <div id="non-registered-patient-info" style="display: none;">
+            {{form.time}}
+        </div>
+            <div style="padding-left:20%;"><button id="submit" class="btn btn-success">Запись</button></div>
+
+      </form>
+
+    </div>
+  {% endblock content %}
+
+  {% block js %}
+    <script src="{% static 'jquery-ui/jquery-ui.js' %}" ></script>
+
+    <script type = "text/javascript">
+    $("#id_date").datepicker({dateFormat: 'yy-mm-dd'});
+
+    $(document).ready(function() {
+        //дата по Ajax передается на сервер для сравнения
+        // возвращается список с занятым временем для приема, для сравнения с таблицей
+        var checkUnavailableTime = function() {
+            var date_data = {
+                doctor_id: {{doctor.id}},
+                date_from_ajax: $("input[name=date]").val(),
+                csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']").attr('value')
+            }
+            $.ajax({
+                type: 'POST',
+                url: "/date_from_ajax/",
+                data: date_data,
+                dataType: 'json',
+                success: function(response) {
+                    $("td .time").css("background-color", background_color);
+                    $("td .time").css("color", "black");
+                    for (var i in response['time_list']) {
+                        $("td .time").each(function() {
+                            if ($(this).html() == response['time_list'][i]) {
+                                $(this).css("background-color", "grey");
+                            };
+                        });
+                    }
+                }
+            });
+        };
+        //  таблица времени приема
+        var background_color = $("td .time").css("background-color")
+        $("td .time").click(function(event) {
+            event.preventDefault();
+            $("td .time").each(function() {
+                $(this).css("color", "black");
+            });
+            if ($(this).css("background-color") !== "rgb(128, 128, 128)") {
+                $(this).css("color", "#FF00FF");
+                var time = $(this).html();
+                $("#id_time").attr('value', time);
+            } else {
+                $("#id_time").attr('value', '')
+            }
+        });
+        $("td .time").mouseover(function(event) {
+            if ($(this).css("background-color") !== "rgb(128, 128, 128)") {
+                $(this).css("background-color", "#CEF6D8");
+            };
+        }).mouseout(function(event) {
+            if ($(this).css("background-color") !== "rgb(128, 128, 128)") {
+                $(this).css("background-color", background_color);
+            };
+        });
+        // при выборе даты -идет запрос на сервер и возвращаются часы приема, кот уже заняты
+        $("input[name=date]").change(function() {
+            checkUnavailableTime();
+        });
+        // когда приходит сообщение что есть ошибки в заполении формы -
+        //также идет запрос на сервер и возвращаются часы приема, кот уже заняты
+        if ($(".errorlist").html() !== "" && $("input[name=date]").val() !== "") {
+            checkUnavailableTime();
+        }
+    });
+    </script>
+
+  {% endblock %}
+
+  {% block css %}
+    <link rel="stylesheet" href="{% static 'jquery-ui/jquery-ui.css' %}">
+    <link rel="stylesheet" href="{% static 'jquery-ui/jquery-ui.theme.css' %}">
+  {% endblock %}
+
+
+
+
+
+
+

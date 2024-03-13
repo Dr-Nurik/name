@@ -1,0 +1,30 @@
+{% extends "main base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="servcices price-list-container" style="margin-top: 175px;">
+    <h1>Прайс лист</h1>
+    {% if object_list %}
+    <table class="servcices price-list">
+        <tr>
+            <th>Название услуги</th>
+            <th>Об услуге</th>
+            <th>Цена, тг.</th>
+        </tr>
+        {% for service in object_list %}
+            <tr>
+                <td><a href="{% url 'main:service_detail' service.id %}">{{ service.name }}</a></td>
+                <td>{{ service.about }}.</td>
+                <td>{{ service.price }} тенге</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>No services available.</p>
+    {% endif %}
+</div>
+       {% if user.is_superuser %}
+<a href="{% url 'main:service_create' %}">Create New Service</a>
+     {% else %}
+{% endif %}
+{% endblock %}

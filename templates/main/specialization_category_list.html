@@ -1,0 +1,15 @@
+<!-- your_app/templates/your_app/specialization_category_list.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Specialization Categories</title>
+</head>
+<body>
+    <h1>Specialization Categories</h1>
+    <ul>
+        {% for category in categories %}
+            <li>{{ category.name }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

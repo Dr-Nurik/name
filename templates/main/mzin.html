@@ -1,0 +1,479 @@
+{% extends "main base.html" %}
+{% load static %}
+
+    {% block title %}
+      {{ block.super }}Главная страница{{doctor.name|safe}}
+    {% endblock %}
+{% block content %}
+   </head>
+
+
+
+      <div id="home" class="parallax first-section wow fadeIn" data-stellar-background-ratio="0.4" style="background-image:url('{% static 'images/slider-bg.png' %}');">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-12 col-sm-12">
+                  <div class="text-contant">
+                     <h2>
+                        <span class="center"><span class="icon"><img src="{% static 'images/icon-logo.png' %}" alt="#" /></span></span>
+                        <a href="" class="typewrite" data-period="2000" data-type='[ "Здоровый след" , "Ортопедический кабинет!" ]'>
+                        <span class="wrap"></span>
+                        </a>
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <!-- end row -->
+         </div>
+         <!-- end container -->
+      </div>
+      <!-- end section -->
+      <div id="time-table" class="time-table-section">
+         <div class="container">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+               <div class="row">
+                  <div class="service-time one" style="background:#2895f1;">
+                     <span class="info-icon"><i class="fa fa-ambulance" aria-hidden="true"></i></span>
+                     <h3>О клинике</h3>
+                     <p>Здоровый след, ортопедический кабинет: адреса со входами на карте, отзывы, фото, номера телефонов, время работы и как доехать.</p>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+               <div class="row">
+                  <div class="service-time middle" style="background:#0071d1;">
+                     <span class="info-icon"><i class="fa fa-hourglass" aria-hidden="true"></i></span>
+                     <h3>График работы</h3>
+                     <div class="time-table-section">
+                        <ul>
+                           <li><span class="left">Понедельник - Пятница</span><span class="right">8.00 – 18.00</span></li>
+                           <li><span class="left">Суббота</span><span class="right">8.00 – 16.00</span></li>
+                           <li><span class="left">Воскресенье</span><span class="right">8.00 – 13.00</span></li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+               <div class="row">
+                  <div class="service-time three" style="background:#0060b1;">
+                     <span class="info-icon"><i class="fa fa-hospital" aria-hidden="true"></i></span>
+                     <h3>О записи в клинику</h3>
+                     <p>ЧТО ТО ПРО ЧТО ТАМ ПРО ЛЯП ТАПАЛЯ ТО ЛЯПОТА</p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="about" class="section wow fadeIn">
+         <div class="container">
+            <div class="heading">
+               <span class="icon-logo"><img src="{% static 'images/icon-logo.png' %}" alt="#"></span>
+               <h2>О нас</h2>
+            </div>
+            <!-- end title -->
+            <div class="row">
+               <div class="col-md-6">
+                  <div class="message-box">
+                     <h4>Кто и что мы делаем</h4>
+                     <h1>Чем занимается наш кабинет</h1>
+                     <p class="lead">LOREM IPSUM и рыба текст </p>
+                     <p> LOREM IPSUM и рыба текст </p>
+                     <a href="#services" data-scroll class="btn btn-light btn-radius btn-brd grd1 effect-1">Подробнее о наших услугах</a>
+                  </div>
+                  <!-- end messagebox -->
+               </div>
+               <!-- end col -->
+               <div class="col-md-6">
+                  <div class="post-media wow fadeIn">
+                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqwS1TJtaSM5q2ssRsBOpcge6ykCt87uBKRZyw3icRBcfFzrh6hedEyPtekjrMd7wpgG8&usqp=CAU" alt="" class="img-responsive">
+                     <a href="https://www.instagram.com/reel/Cj2XT8Tobns/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" data-rel="prettyPhoto[gal]" class="playbutton"><i class="flaticon-play-button"></i></a>
+                  </div>
+                  <!-- end media -->
+               </div>
+               <!-- end col -->
+            </div>
+            <!-- end row -->
+            <hr class="hr1">
+            <div class="row">
+               <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="service-widget">
+                     <div class="post-media wow fadeIn">
+                        <a href="{% static 'images/clinic_01.jpg' %}" data-rel="prettyPhoto[gal]" class="hoverbutton global-radius"><i class="flaticon-unlink"></i></a>
+                        <img src="{% static 'images/clinic_01.jpg' %}" alt="" class="img-responsive">
+                     </div>
+                     <h3>Современное оборудование</h3>
+                  </div>
+                  <!-- end service -->
+               </div>
+               <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="service-widget">
+                     <div class="post-media wow fadeIn">
+                        <a href="{% static 'images/clinic_02.jpg' %}" data-rel="prettyPhoto[gal]" class="hoverbutton global-radius"><i class="flaticon-unlink"></i></a>
+                        <img src="{% static 'images/clinic_02.jpg' %}" alt="" class="img-responsive">
+                     </div>
+                     <h3>Удобный кабинет для обследование</h3>
+                  </div>
+                  <!-- end service -->
+               </div>
+               <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="service-widget">
+                     <div class="post-media wow fadeIn">
+                        <a href="{% static 'images/clinic_03.jpg' %}" data-rel="prettyPhoto[gal]" class="hoverbutton global-radius"><i class="flaticon-unlink"></i></a>
+                        <img src="{% static 'images/clinic_03.jpg' %}" alt="" class="img-responsive">
+                     </div>
+                     <h3>Высококласные специалисты</h3>
+                  </div>
+                  <!-- end service -->
+               </div>
+               <div class="col-md-3 col-sm-6 col-xs-12">
+                  <div class="service-widget">
+                     <div class="post-media wow fadeIn">
+                        <a href="{% static 'images/clinic_01.jpg' %}" data-rel="prettyPhoto[gal]" class="hoverbutton global-radius"><i class="flaticon-unlink"></i></a>
+                        <img src="{% static 'images/clinic_01.jpg' %}" alt="" class="img-responsive">
+                     </div>
+                     <h3>Лечение без лекарств</h3>
+                  </div>
+                  <!-- end service -->
+               </div>
+            </div>
+            <!-- end row -->
+         </div>
+         <!-- end container -->
+      </div>
+      <div id="service" class="services wow fadeIn">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+                  <div class="inner-services">
+                     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                        <div class="serv">
+                           <span class="icon-service"><img src="{% static 'images/service-icon1.png' %}" alt="#" /></span>
+                           <h4>Современные аппараты</h4>
+                           <p>Lorem Ipsum is simply dummy text of the printing.</p>
+                        </div>
+                     </div>
+                     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                        <div class="serv">
+                           <span class="icon-service"><img src="{% static 'images/service-icon2.png' %} " alt="#" /></span>
+                           <h4>Забота о здоровье</h4>
+                           <p>Lorem Ipsum is simply dummy text of the printing.</p>
+                        </div>
+                     </div>
+                     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                        <div class="serv">
+                           <span class="icon-service"><img src="{% static 'images/service-icon3.png' %}" alt="#" /></span>
+                           <h4>Превосходный специалист</h4>
+                           <p>Lorem Ipsum is simply dummy text of the printing.</p>
+                        </div>
+                     </div>
+                     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                        <div class="serv">
+                           <span class="icon-service"><img src="{% static 'images/service-icon4.png' %}" alt="#" /></span>
+                           <h4>Заботимся даже о детей</h4>
+                           <p>Lorem Ipsum is simply dummy text of the printing.</p>
+                        </div>
+                     </div>
+                     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                        <div class="serv">
+                           <span class="icon-service"><img src="{% static 'images/service-icon5.png' %}" alt="#" /></span>
+                           <h4>Методы без лекарств</h4>
+                           <p>Lorem Ipsum is simply dummy text of the printing.</p>
+                        </div>
+                     </div>
+                     <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+                        <div class="serv">
+                           <span class="icon-service"><img src="{% static 'images/service-icon6.png' %}" alt="#" /></span>
+                           <h4>КРОВИ НЕ БУДЕТ</h4>
+                           <p>Lorem Ipsum is simply dummy text of the printing.</p>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                  <div class="appointment-form">
+                     <h3><span>+</span> Записи к врачу</h3>
+<div class="form">
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <fieldset>
+        <!-- User Authentication Section -->
+        <div class="form-group">
+            {% if request.user.is_authenticated %}
+                <p>{{ request.user.full_name }}</p>
+            {% else %}
+                <input type="text" name="non_registered_patient_name" placeholder="Your Name" class="form-control" />
+                <input type="email" name="non_registered_patient_contact" placeholder="Email Address" class="form-control" />
+            {% endif %}
+        </div>
+
+        <!-- Service and Doctor Selection -->
+        <div class="form-group">
+            <select class="form-control" name="service">
+                {% for service in services_list %}
+                    <option value="{{ service.id }}">{{ service.name }}</option>
+                {% empty %}
+                    <option>No services available</option>
+                {% endfor %}
+            </select>
+            <select class="form-control" name="doctor">
+            {% for doctor in doctors_list %}
+    <option value="{{ doctor.id }}">{{ doctor.doctors_name.full_name }}</option>
+{% empty %}
+    <option>No doctors available</option>
+{% endfor %}
+            </select>
+        </div>
+
+        <!-- Date and Time Selection -->
+        <div class="form-group">
+            <label for="date">Дата приема</label>
+            <input type="date" id="date" name="date" class="form-control">
+        </div>
+
+
+        <!-- Submit Button -->
+        <div class="form-group">
+            <div class="center"><button type="submit" class="btn btn-primary">Submit</button></div>
+        </div>
+    </fieldset>
+</form>
+
+</div>  </div>
+
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- end section -->
+	  
+	  <!-- doctor -->
+	  
+	  <div id="doctors" class="parallax section db" data-stellar-background-ratio="0.4" style="background:#fff;" data-scroll-id="doctors" tabindex="-1">
+        <div class="container">
+		
+		<div class="heading">
+               <span class="icon-logo"><img src="{% static 'images/icon-logo.png' %}" alt="#"></span>
+               <h2>Наши специалисты</h2>
+            </div>
+
+            <div class="row dev-list text-center">
+    {% for doctor in doctors_list %}
+        {% if doctor.image %}
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s" style="visibility: visible; animation-duration: 1s; animation-delay: 0.2s; animation-name: fadeIn;">
+                <div class="widget clearfix">
+                    <!-- Doctor's Image -->
+                    <img src="{{ doctor.image.url }}" alt="{{ doctor.full_name }}" class="img-responsive img-rounded">
+
+                    <!-- Doctor's Info -->
+                    <div class="widget-title">
+                        <h3>{{ doctor.doctors_name.full_name }}</h3>
+                        <small>{{ doctor.specialization_category }}</small>
+                    </div>
+                    <p>{{ doctor.bio }}</p>
+
+                    <!-- Social Media Links -->
+                    <div class="footer-social">
+                        <a href="#" class="btn grd1"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="btn grd1"><i class="fab fa-github"></i></a>
+                        <a href="#" class="btn grd1"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="btn grd1"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div><!-- widget -->
+            </div><!-- end col -->
+        {% endif %}
+    {% endfor %}
+</div><!-- row -->
+
+                    </div><!--widget -->
+                </div><!-- end col -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </div>
+	  
+
+                        <!-- end row -->
+                     </div>
+                     <!-- end pane -->
+
+                     </div>
+                     <!-- end pane -->
+                  </div>
+                  <!-- end content -->
+               </div>
+               <!-- end col -->
+            </div>
+         </div>
+      </div>
+	  
+	  <!-- end doctor section -->
+
+      <div id="getintouch" class="section wb wow fadeIn" style="padding-bottom:0;">
+
+         <div class="contact-section">
+            <div class="form-contant">
+            <form id="ajax-contact" method="post">
+    {% csrf_token %}
+                  <div class="row">
+                     <div class="col-md-6">
+                        <div class="form-group in_name">
+                           <input type="text" class="form-control" placeholder="ФИО" required="required">
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="form-group in_email">
+                           <input type="email" class="form-control" placeholder="E-mail" required="required">
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="form-group in_email">
+                           <input type="tel" class="form-control" id="phone" placeholder="Номер телефона" required="required">
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="form-group in_email">
+                           <input type="text" class="form-control" id="subject" placeholder="Тема" required="required">
+                        </div>
+                     </div>
+                     <div class="col-md-12">
+                        <div class="form-group in_message">
+                             {{ form.feedback }}
+                           <textarea class="form-control" id="message" rows="5" placeholder="Сообщение" required="required"></textarea>
+                        </div>
+                        <div class="actions">
+                                           <input type="submit" value="Send Message" name="submit" id="submitButton" class="btn small" title="Submit Your Message!">
+
+                        </div>
+                     </div>
+                  </div>
+               </form>
+            </div>
+            <div id="googleMap" style="width:10%;height:450px;">
+                 <a class="dg-widget-link" href="http://2gis.kz/karaganda/firm/70000001063060624/center/72.96620249748231,50.04934763090384/zoom/17?utm_medium=widget-source&utm_campaign=firmsonmap&utm_source=bigMap">Посмотреть на карте Караганды</a>
+                <div class="dg-widget-link"><a href="http://2gis.kz/karaganda/firm/70000001063060624/photos/70000001063060624/center/72.96620249748231,50.04934763090384/zoom/17?utm_medium=widget-source&utm_campaign=firmsonmap&utm_source=photos">Фотографии компании</a></div>
+                <div class="dg-widget-link"><a href="http://2gis.kz/karaganda/center/72.966312,50.049015/zoom/17/routeTab/rsType/bus/to/72.966312,50.049015╎Здоровый след, ортопедический кабинет?utm_medium=widget-source&utm_campaign=firmsonmap&utm_source=route">Найти проезд до Здоровый след, ортопедический кабинет</a></div>
+                <script charset="utf-8" src="https://widgets.2gis.com/js/DGWidgetLoader.js"></script>
+                <script charset="utf-8">new DGWidgetLoader({"width":"1000%","height":"450px","borderColor":"#a3a3a3","pos":{"lat":50.04934763090384,"lon":72.96620249748231,"zoom":17},"opt":{"city":"karaganda"},"org":[{"id":"70000001063060624"}]});</script>
+                <noscript style="color:#c00;font-size:16px;font-weight:bold;">Виджет карты использует JavaScript. Включите его в настройках вашего браузера.</noscript>
+
+            </div>
+         </div>
+      </div>
+
+      <!-- end copyrights -->
+      <a href="#home" data-scroll class="dmtop global-radius"><i class="fa fa-angle-up"></i></a>
+      <!-- all js files -->
+<script src="{% static 'js/all.js' %}"></script>
+      <!-- all plugins -->
+    <script src="{% static 'js/custom.js' %}"></script>
+      <!-- map -->
+   </body>
+</html>
+
+<style></style>
+<script>
+    window.onload = function() {
+        var now = new Date();
+        var today = now.toISOString().split('T')[0];
+        var hour = ("0" + now.getHours()).slice(-2);
+        var minute = ("0" + now.getMinutes()).slice(-2);
+        var time = hour + ":" + minute;
+
+        // Set the current date and time
+        document.getElementById('date').value = today;
+        document.getElementById('time').value = time;
+
+        // Restrict past dates
+        document.getElementById('date').setAttribute('min', today);
+
+        // Example array of unavailable times
+        var unavailableTimes = ["09:00", "09:30", /* other times */];
+
+        // Event listener for time field
+        document.getElementById('time').addEventListener('click', function(event) {
+            var selectedTime = event.target.value;
+            if (unavailableTimes.includes(selectedTime)) {
+                event.target.style.backgroundColor = 'red'; // mark as red
+                event.preventDefault(); // prevent clicking
+            }
+        });
+    };
+</script>
+
+
+</script>
+<style>
+</style>
+<script>
+
+    var TxtType = function(el, toRotate, period) {
+        this.toRotate = toRotate;
+        this.el = el;
+        this.loopNum = 0;
+        this.period = parseInt(period, 10) || 2000;
+        this.txt = '';
+        this.tick();
+        this.isDeleting = false;
+    };
+
+    TxtType.prototype.tick = function() {
+        var i = this.loopNum % this.toRotate.length;
+        var fullTxt = this.toRotate[i];
+
+        if (this.isDeleting) {
+            this.txt = fullTxt.substring(0, this.txt.length - 1);
+        } else {
+            this.txt = fullTxt.substring(0, this.txt.length + 1);
+        }
+
+        this.el.innerHTML = '<span class="wrap">'+this.txt+'</span>';
+
+        var that = this;
+        var delta = 200 - Math.random() * 100;
+
+        if (this.isDeleting) { delta /= 2; }
+
+        if (!this.isDeleting && this.txt === fullTxt) {
+            delta = this.period;
+            this.isDeleting = true;
+        } else if (this.isDeleting && this.txt === '') {
+            this.isDeleting = false;
+            this.loopNum++;
+            delta = 500;
+        }
+
+        setTimeout(function() {
+            that.tick();
+        }, delta);
+    };
+
+    window.onload = function() {
+        var elements = document.getElementsByClassName('typewrite');
+        for (var i=0; i<elements.length; i++) {
+            var toRotate = elements[i].getAttribute('data-type');
+            var period = elements[i].getAttribute('data-period');
+            if (toRotate) {
+                new TxtType(elements[i], JSON.parse(toRotate), period);
+            }
+        }
+    };
+</script>
+</script><script>
+/* Когда пользователь нажимает на кнопку, переключаться раскрывает содержимое */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Закрыть раскрывающийся список, если пользователь щелкнет за его пределами.
+window.onclick = function(e) {
+  if (!e.target.matches('.dropbtn')) {
+  var myDropdown = document.getElementById("myDropdown");
+    if (myDropdown.classList.contains('show')) {
+      myDropdown.classList.remove('show');
+    }
+  }
+}
+</script>
+{% endblock %}

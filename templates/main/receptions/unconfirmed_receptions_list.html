@@ -1,0 +1,22 @@
+{% extends 'main base.html' %}
+{% block content %}
+
+<div class="container mt-5" style="margin-top: 15rem;">
+    <h1>Не подтвержденные записи</h1>
+    <ul class="list-group">
+        {% for reception in receptions %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ reception.date }} - {{ reception.doctor_name }} для {{ reception.patient_name }}
+                <div>
+                    <a href="{% url 'main:reception_detail' reception.pk %}" class="btn btn-info btn-sm">Подробнее</a>
+                    <a href="{% url 'main:delete_reception' reception.pk %}" class="btn btn-danger btn-sm">Удалить</a>
+                </div>
+            </li>
+        {% empty %}
+            <li class="list-group-item">Нет записей.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'main:add_reception' %}" class="btn btn-primary mt-3">Добавить прием</a>
+</div>
+
+{% endblock %}

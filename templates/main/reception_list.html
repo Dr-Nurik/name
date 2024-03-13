@@ -1,0 +1,62 @@
+{% extends "main base.html" %}
+{% load static %}
+
+{% block title %}
+    Reception List
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="margin-top: 175px;">
+    <h1>Список записей:</h1>
+
+    {% if receptions_by_date %}
+        {% for date, receptions in receptions_by_date.items %}
+            <h2>{{ date }}</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Время</th>
+                            <th>Кто записался</th>
+                            <th>Врач</th>
+                            <th>Услуга</th>
+                            <th>Причина</th>
+                            <th>Детали</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reception in receptions %}
+                            <tr>
+                                <td>{{ reception.time }}</td>
+                                <td>{{ reception.patient_name }}</td>
+                                <td>{{ reception.doctor.doctors_name.full_name }}</td>
+                                <td>
+                                    {% for service in reception.services.all %}
+                                        {{ service.name }}{% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </td>
+                                <td>{{ reception.patient_info }}</td>
+                                <td><a href="{% url 'main:reception_detail_for_doctor' reception.pk %}">Просмотр</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="mb-3">
+                <button class="btn btn-primary" onclick="printPage()">Распечатать список</button>
+                <a class="btn btn-success" href="{% url 'main:export_to_excel' %}">Скачать список в Excel</a>
+                <a class="btn btn-info" href="{% url 'main:export_to_word_by_date' date %}">Скачать список за {{ date }} в Word</a>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="alert alert-warning">Нет подтвержденных приемов.</p>
+    {% endif %}
+</div>
+
+<script>
+    function printPage() {
+        window.print();
+    }
+</script>
+
+{% endblock %}

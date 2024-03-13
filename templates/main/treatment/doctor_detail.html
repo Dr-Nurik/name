@@ -1,0 +1,61 @@
+{% extends "main base.html" %}
+    {% load static %}
+{% block content %}
+<div class="container mt-5" style="margin-top: 175px;">
+    <div class="card">
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                {% if doctor.image %}
+                    <img src="{{ doctor.image.url }}" alt="{{ doctor.doctors_name.full_name }}" class="img-fluid rounded-start" style="width: 100%; height: 100%; object-fit: cover;">
+                {% endif %}
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h1 class="card-title">{{ doctor.doctors_name.full_name }}</h1>
+                    <p class="card-text"><strong>Возраст:</strong> {% if doctor.birth_date %}{{ doctor.birth_date|date:"Y" }} лет{% else %}Не указан{% endif %}</p>
+                    <p class="card-text"><strong>Специализация:</strong> {{ doctor.specialization_category }}</p>
+                    <p class="card-text"><strong>Биография:</strong> {{ doctor.bio }}</p>
+                    <p class="card-text"><strong>Достижения:</strong> {{ doctor.achievements }}</p>
+                    <p class="card-text"><strong>Сертификаты:</strong> {{ doctor.certificates }}</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+	  <div id="doctors" class="parallax section db" data-stellar-background-ratio="0.4" style="background:#fff;" data-scroll-id="doctors" tabindex="-1">
+        <div class="container">
+
+		<div class="heading">
+               <span class="icon-logo"><img src="{% static 'images/icon-logo.png' %}" alt="#"></span>
+               <h2>Наши специалисты</h2>
+            </div>
+
+            <div class="row dev-list text-center">
+    {% for doctor in doctors_list %}
+        {% if doctor.image %}
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s" style="visibility: visible; animation-duration: 1s; animation-delay: 0.2s; animation-name: fadeIn;">
+                <div class="widget clearfix">
+                    <!-- Doctor's Image -->
+                    <img src="{{ doctor.image.url }}" alt="{{ doctor.full_name }}" class="img-responsive img-rounded">
+
+                    <!-- Doctor's Info -->
+                    <div class="widget-title">
+                        <h3>{{ doctor.doctors_name.full_name }}</h3>
+                        <small>{{ doctor.specialization_category }}</small>
+                    </div>
+                    <p>{{ doctor.bio }}</p>
+
+                    <!-- Social Media Links -->
+                    <div class="footer-social">
+                        <a href="#" class="btn grd1"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="btn grd1"><i class="fab fa-github"></i></a>
+                        <a href="#" class="btn grd1"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="btn grd1"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div><!-- widget -->
+            </div><!-- end col -->
+        {% endif %}
+    {% endfor %}
+</div><!-- row -->
+{% endblock %}

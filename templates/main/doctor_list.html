@@ -1,0 +1,17 @@
+<!-- your_app/templates/your_app/doctor_list.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctors List</title>
+    <!-- Link to your CSS file -->
+
+</head>
+<body>
+    <h1>Doctors List</h1>
+    <ul>
+        {% for doctor in doctors %}
+            <li>{{ doctor.full_name }} - {{ doctor.specialization_category.name }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

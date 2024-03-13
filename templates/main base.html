@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+
+<head>
+<html lang="en">
+   <!-- Basic -->
+   <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <!-- Mobile Metas -->
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+   <!-- Site Metas -->
+   <title>{% block title %}{% endblock %}</title>
+   <meta name="keywords" content="">
+   <meta name="description" content="">
+   <meta name="author" content="">
+   <!-- Site Icons -->
+ <link rel="shortcut icon" href="{% static 'images/fevicon.ico.png' %}" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="{% static 'images/apple-touch-icon.png' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+   <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'csss/bootstrap.min.css' %}">
+   <!-- Site CSS -->
+       <link rel="stylesheet" href="{% static 'csss/style.css' %}">
+   <!-- Colors CSS -->
+   <link rel="stylesheet" href="{% static 'csss/colors.css' %}">
+   <!-- ALL VERSION CSS -->
+    <link rel="stylesheet" href="{% static 'csss/versions.css' %}">
+   <!-- Responsive CSS -->
+   <link rel="stylesheet" href="{% static 'csss/responsive.css' %}">
+      <link rel="stylesheet" href="{% static 'css/base.css' %}">
+   <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'csss/custom.css' %}">
+   <!-- Modernizer for Portfolio -->
+<script src="{% static 'jsa/modernizer.js' %}"></script>
+
+  {% block extra_css %}{% endblock %}
+  {% include "include/header.html" %}
+
+
+</head>
+<body>
+
+
+  {% block content %}
+  <!-- Содержимое этого блока будет переопределено в дочерних шаблонах -->
+  {% endblock %}
+    {% block extra_js %}{% endblock %}
+{% include "include/footer.html" %}
+</body>
+</html>
