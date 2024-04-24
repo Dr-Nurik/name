@@ -1,89 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% extends "main base.html" %}
-    {% load static %}
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
 
-</head>
-<body>
-    {% block content %}
-         <div class="container mt-5" style="margin-top: 175px;">
-        <h1>Годовой отчет за {{ current_year }}</h1>
-        <p>Количество пациентов: {{ patient_count }}</p>
-        {{ service_data|json_script:"service-data" }}
+{% extends 'main base.html' %}
+{% load static %}
 
-        <h1>Статистика по услугам</h1>
-        <ul class="list-group">
-            {% for service in service_stats %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                {{ service.services__name }}
-                <span class="badge badge-primary badge-pill">{{ service.count }}</span>
-            </li>
-            {% endfor %}
-        </ul>
+{% block content %}
+<div class="container my-5" style="margin-top:175px">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <h1 class="mb-5 text-center">Годовой отчет за {{ current_year }}</h1>
+            <div class="d-flex justify-content-center">
+                <form method="get" class="form-inline my-4">
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary ml-2">Показать</button>
+                </form>
+            </div>
 
-              <div id="serviceChartContainer">
-            <canvas id="serviceChart"></canvas> </div>
-
-        <div class="container mt-5">
-            <h1>Годовой отчет за {{ current_year }}</h1>
-            <p>Пациенты, посетившие тренажерный зал после врача: {{ gym_attendance_count }}</p>
+            <!-- Секция услуг -->
+<div class="mt-5" id="servicesSection">
+    <h1 class="text-center mb-4">Статистика по услугам</h1>
+    {% if service_stats %}
+        <h3 class="text-center">Общее количество пациентов: {{ total_patients_count }}</h3>
+        <div class="chart-container" style="position: relative; height:40vh; width:80vw;">
+            <canvas id="serviceChart"></canvas>
         </div>
-    </div>
-    {% endblock %}
-    {% block extra_js %}
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-    function getRandomColor() {
-        var r = Math.floor(Math.random() * 256);
-        var g = Math.floor(Math.random() * 256);
-        var b = Math.floor(Math.random() * 256);
-        return 'rgba(' + r + ', ' + g + ', ' + b + ', 0.2)';
-    }
+    {% else %}
+        <h3 class="text-center">Данные не найдены</h3>
+    {% endif %}
+</div>
 
-    document.addEventListener("DOMContentLoaded", function() {
-        var serviceData = JSON.parse(document.getElementById('service-data').textContent);
-        var backgroundColors = serviceData.labels.map(() => getRandomColor());
+        <!-- Секция тренажерного зала -->
+<div class="mt-5" id="gymSection">
+    <h1 class="text-center mb-4">Пациенты в тренажерном зале</h1>
+    {% if gym_attendance_count > 0 %}
+        <h3 class="text-center">Общее количество пациентов: {{ total_patients_count }}</h3>
+        <h3 class="text-center">Пациенты в тренажерном зале: {{ gym_attendance_count }}</h3>
+        <div class="chart-container" style="position: relative; height:40vh; width:80vw;">
+            <canvas id="gymChart"></canvas>
+        </div>
+    {% else %}
+        <h3 class="text-center">Данные не найдены</h3>
+    {% endif %}
+</div></div></div><form method="POST" action="{% url 'main:download_word_report' %}">
+    {% csrf_token %}
+    <input type="hidden" name="start_date" value="{{ start_date|date:'Y-m-d' }}">
+    <input type="hidden" name="end_date" value="{{ end_date|date:'Y-m-d' }}">
+    <button type="submit" class="btn btn-info">Скачать отчет в формате Word</button>
+</form>
+</div></div></div>
+{% endblock %}
 
-        var ctx = document.getElementById('serviceChart').getContext('2d');
-        var serviceChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: serviceData.labels,
-                datasets: [{
-                    label: 'Услуги',
-                    data: serviceData.data,
-                    backgroundColor: backgroundColors,
-                    borderColor: backgroundColors.map(color => color.replace('0.2', '1')),
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        display: true
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(tooltipItem) {
-                                var value = serviceData.data[tooltipItem.dataIndex];
-                                var total = serviceData.data.reduce((sum, value) => sum + value, 0);
-                                var percentage = ((value / total) * 100).toFixed(2);
-                                return serviceData.labels[tooltipItem.dataIndex] + ': ' + percentage + '%';
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    });
+{% block extra_js %}
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var serviceData = {{ service_data|safe }};
 </script>
-{% endblock extra_js %}
-</body>
-</html>
+<script src="{% static 'js/custom_script.js' %}"></script>
+<script>
+    var gymData = {
+        labels: ["Общее количество пациентов", "Пациенты в тренажерном зале"],
+        data: [{{ total_patients_count }}, {{ gym_attendance_count }}]
+
+    };
+</script>
+<script src="{% static 'js/gym_chart_script.js' %}"></script>
+{% endblock %}

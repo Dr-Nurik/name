@@ -1,11 +1,25 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Service Detail</title>
-</head>
-<body>
-    <h1>{{ object.name }}</h1>
-    <p>{{ object.about }}</p>
-    <p>Price: {{ object.price }} руб.</p>
-</body>
-</html>
+{% extends "main base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container my-5" style="margin-top: 200px;">
+   <div class="row">
+        <div class="col-lg-10 offset-lg-1">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    {% if object.image %}
+                        <img src="{{ object.image.url }}" class="img-fluid rounded mb-4" alt="{{ object.name }}" style="max-height: 300px; width: 100%; object-fit: cover;">
+                    {% endif %}
+                    <h1 class="card-title mb-3 text-center">{{ object.name }}</h1>
+                    <p class="card-text">{{ object.about }}</p>
+                    <p class="card-text text-end">
+                        <strong>Цена:</strong> {{ object.price }} руб.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+{% endblock %}

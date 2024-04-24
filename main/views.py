@@ -1,10 +1,10 @@
 from .models import (SpecializationCategory, Doctor,
-                     Service, Reception, PatientMedicalHistory,
-                     MedicalEquipment, PatientFeedback, Diagnosis,
-                     UserProfile, Masseur, TrainingEquipment)
+                     Service, Reception,
+                     MedicalEquipment, Diagnosis,
+                     UserProfile, Masseur, TrainingEquipment, Trainer)
 from .forms import (ReceptionForm, ServiceForm,
                     TimePeriodForm, DiagnosisForm,
-                    ReceptionEditForm,PatientFeedbackForm)
+                    ReceptionEditForm)
 from django.views.generic.edit import FormView
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import UserPassesTestMixin
@@ -28,7 +28,15 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import ReceptionSerializer, ServiceSerializer, DoctorSerializer, MasseurSerializer, TrainingEquipmentSerializer
+from datetime import datetime, timedelta
+from .forms import DateRangeForm
+from django.db.models import Q
+from django.utils.translation import gettext as _
+from django.views.generic.edit import FormView
+import json
 
+import logging
+logger = logging.getLogger(__name__)
 
 class AdminRequiredMixin(UserPassesTestMixin):
     def test_func(self):
@@ -37,6 +45,10 @@ class AdminRequiredMixin(UserPassesTestMixin):
 def reception_confirmation_view(request):
     # Здесь ваша логика представления
     return render(request, 'main/reception_confirmation.html')
+from django.shortcuts import redirect
+from django.views.generic.edit import FormView
+from .forms import ReceptionForm
+from .models import Reception, Service, Doctor, Masseur, TrainingEquipment
 
 class ReceptionView(FormView):
     form_class = ReceptionForm
@@ -44,33 +56,34 @@ class ReceptionView(FormView):
 
     def form_valid(self, form):
         fcd = form.cleaned_data
-        selected_doctor = fcd['doctor']
-        selected_services = fcd['service']  # Используем 'services', если это ManyToManyField в модели
-        current_user = self.request.user if self.request.user.is_authenticated else None
+        logger.info(f"Received form data: {fcd}")
 
         new_reception = Reception(
-            date=fcd['date'],
-            doctor=selected_doctor,
-            patient_name=current_user if current_user else None,
-            non_registered_patient_name=fcd.get('non_registered_patient_name', ''),
-            non_registered_patient_contact=fcd.get('non_registered_patient_contact', '')
+            date=fcd.get('date'),
+            fullname_patient=fcd.get('fullname_patient'),
+            patient_contact=fcd.get('patient_contact'),
+            doctor=fcd.get('doctor'),
+            masseur=fcd.get('masseur'),
+            trainer=fcd.get('trainer')
         )
-
-        if any(service.name.lower() == 'massage' for service in selected_services.all()):
-            # Находим доступного массажиста
-            available_masseur = Masseur.objects.first()  # Пример, измените логику по вашему усмотрению
-            new_reception.masseur = available_masseur
-
         new_reception.save()
-        new_reception.services.set(selected_services)  # Используем set для ManyToMany полей
+        new_reception.services.set(fcd['services'])
+        logger.info(f"Reception created successfully: {new_reception.id}")
+        return redirect('main:reception_confirmation')
 
-        return redirect('main:reception_confirmation')  # Перенаправление на страницу подтверждения
+    def form_invalid(self, form):
+        logger.error(f"Form is invalid: {form.errors}")
+        return super().form_invalid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['services_list'] = Service.objects.all()
         context['doctors_list'] = Doctor.objects.all()
-        context['current_user'] = self.request.user.get_full_name() if self.request.user.is_authenticated else 'Guest'
+        context['masseur_list'] = Masseur.objects.all()
+        context['trainer_list'] = TrainingEquipment.objects.all()
+        context['trainers_list'] = Trainer.objects.all()
+        data_types_json = json.dumps([str(_("Здоровый След")), str(_("Ортопедический центр!"))])
+        context['data_types_json'] = data_types_json
+
         return context
 
 
@@ -89,6 +102,68 @@ class ServiceUpdateView(UpdateView):
     template_name = 'main/service_update_form.html'
     success_url = reverse_lazy('service_list')
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+from django.db.models import Q
+from .models import Reception, Diagnosis  # Import your models here
+
+def confirmed_and_arrived_receptions(request):
+    search_query = request.GET.get('search', '')
+    receptions_query = Reception.objects.filter(comed=True, is_confirmed=True)
+
+    if search_query:
+        receptions_query = receptions_query.filter(
+            Q(fullname_patient__icontains=search_query) |
+            Q(diagnosis__diagnosis_text__icontains=search_query) |
+            Q(diagnosis__treatment_text__icontains=search_query)
+        ).distinct()
+
+    # Set up pagination
+    paginator = Paginator(receptions_query, 20)  # 20 receptions per page
+    page = request.GET.get('page')
+
+    try:
+        receptions = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        receptions = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g., 9999), deliver last page of results.
+        receptions = paginator.page(paginator.num_pages)
+
+    diagnosis_list = Diagnosis.objects.filter(reception__in=receptions).select_related('reception')
+
+    context = {
+        'receptions': receptions,
+        'diagnosis_list': diagnosis_list,
+        'search_query': search_query,
+    }
+    return render(request, 'main/receptions/conf_arr_receptions_list.html', context)
+
+
+from collections import defaultdict
+from django.shortcuts import render
+from django.utils import timezone
+from .models import Reception
+
+def confirmed_receptions_for_trainer(request):
+    receptions_query = Reception.objects.filter(
+        is_confirmed=True,
+        trainer__isnull=True,
+        comed=False,
+        date__gte=timezone.now().date()
+    ).order_by('date', 'time')
+
+    receptions_by_date = defaultdict(list)
+    for reception in receptions_query:
+        receptions_by_date[reception.date].append(reception)
+
+    context = {
+        'receptions_by_date': dict(receptions_by_date),
+    }
+    return render(request, 'main/receptions/trainer_receptions_list.html', context)
+
+
 class ServiceListView(ListView):
     model = Service  # Указываем модель, данные которой будут отображаться
     template_name = 'main/service_list.html'  # Указываем шаблон для отображения
@@ -102,33 +177,6 @@ class ServiceCreateView(CreateView):
     form_class = ServiceForm
     template_name = 'main/service_form.html'  # Template for creating a new service
     success_url = reverse_lazy('service_list')  # Redirect URL after successful creation
-
-class PatientMedicalHistoryUpdateView(UpdateView):
-    model = PatientMedicalHistory
-    fields = ['medical_history']
-    template_name = 'main/patientmedicalhistory_update_form.html'
-    success_url = reverse_lazy('patientmedicalhistory_detail')  # Update with the actual detail view name
-
-
-def Feedback(request):
-    if request.method == 'POST':
-        form = PatientFeedbackForm(request.POST)
-        if form.is_valid():
-            # Here you can handle the submitted data
-            form.save()
-            # Redirect or inform the user of success
-    else:
-        form = PatientFeedbackForm()
-
-    return render(request, 'your_template.html', {'form': form})
-
-class PatientFeedbackCreateView(CreateView):
-    model = PatientFeedback
-    fields = ['feedback']
-    template_name = 'main/patientfeedback_form.html'
-    success_url = reverse_lazy('patientfeedback_list')
-
-
 
 def diagnosis_and_treatment_plan(request, reception_id):
     reception = get_object_or_404(Reception, pk=reception_id)
@@ -185,7 +233,7 @@ def export_to_excel(request):
         reception_data = {
             'Дата': reception.date,
             'Время': reception.time,
-            'Пациент': reception.patient_name.full_name if reception.patient_name else reception.non_registered_patient_name,
+            'Пациент': reception.fullname_patient,
             'Услуги': ', '.join([service.name for service in reception.services.all()]),
             'Доктор': reception.doctor.doctors_name.full_name,
             'Тренажер': reception.trainer.name if reception.trainer else '',
@@ -204,7 +252,7 @@ def export_to_excel(request):
     return response
 
 def export_to_word_by_date(request, date):
-    receptions = Reception.objects.filter(date=date, is_confirmed=True).select_related('patient_name', 'doctor', 'masseur', 'trainer').prefetch_related('services')
+    receptions = Reception.objects.filter(date=date, is_confirmed=True).select_related('doctor', 'masseur', 'trainer').prefetch_related('services')
 
     # Создание документа Word
     doc = Document()
@@ -238,8 +286,8 @@ def export_to_word_by_date(request, date):
         row_cells[0].text = str(reception.time)
 
         # Получение имени пациента
-        patient_name = reception.patient_name.full_name if reception.patient_name else reception.non_registered_patient_name
-        row_cells[1].text = patient_name
+        fullname_patient = reception.fullname_patient
+        row_cells[1].text = fullname_patient
 
         # Получение имени врача
         doctor_name = reception.doctor.doctors_name.full_name if reception.doctor else 'Не указано'
@@ -272,29 +320,90 @@ def export_to_word_by_date(request, date):
     doc.save(response)
 
     return response
+from django.shortcuts import render
+from datetime import datetime, timedelta
+from .forms import DateRangeForm  # Убедитесь, что импортировали форму правильно
+from django.db.models import Count, F
 
 @staff_member_required
+# def annual_report(request):
+#     current_year = datetime.now().year
+#     receptions = Reception.objects.filter(date__year=current_year, comed=True, is_confirmed=True)
+#
+#     # Получаем уникальных пациентов, которые посетили врача и подтвердили приход
+#     patients_visited_doctor = Reception.objects.filter(
+#         date__year=current_year,
+#         doctor__isnull=False,
+#         comed=True,
+#         is_confirmed=True
+#     ).values_list('patient_name_id', flat=True).distinct()
+#
+#     # Считаем, сколько из этих пациентов также посетили тренажерный зал
+#     gym_attendance_count = Reception.objects.filter(
+#         patient_name_id__in=patients_visited_doctor,
+#         trainer__isnull=False,
+#         comed=True,
+#         is_confirmed=True,
+#         date__gte=F('patient_name__reception__date')
+#     ).distinct().count()
+#
+#
+#     # Статистика по услугам
+#     service_stats = receptions.values('services__name').annotate(count=Count('services')).order_by('-count')
+#     service_data = {
+#         'labels': [item['services__name'] for item in service_stats] if service_stats else [],
+#         'data': [item['count'] for item in service_stats] if service_stats else [],
+#     }
+#
+#     context = {
+#         'current_year': current_year,
+#         'patient_count': receptions.count(),
+#         'gym_attendance_count': gym_attendance_count,
+#         'service_stats': service_stats,
+#         'service_data': service_data,
+#     }
+#
+#     return render(request, 'main/treatment/annual_report.html', context)
+
 def annual_report(request):
-    current_year = datetime.now().year
-    receptions = Reception.objects.filter(date__year=current_year, comed=True, is_confirmed=True)
+    today = datetime.now()
+    form = DateRangeForm(request.GET)
+    start_date, end_date = None, None
 
-    # Получаем уникальных пациентов, которые посетили врача и подтвердили приход
-    patients_visited_doctor = Reception.objects.filter(
-        date__year=current_year,
-        doctor__isnull=False,
-        comed=True,
-        is_confirmed=True
-    ).values_list('patient_name_id', flat=True).distinct()
+    if form.is_valid():
+        period = form.cleaned_data.get('period')
+        if period == 'year':
+            start_date = datetime(today.year, 1, 1)
+            end_date = today
+        elif period == 'half_year':
+            start_date = today - timedelta(days=182)
+            end_date = today
+        elif period == 'quarter':
+            start_date = today - timedelta(days=90)
+            end_date = today
+        elif period == 'month':
+            start_date = today - timedelta(days=30)
+            end_date = today
+        elif period == 'week':
+            start_date = today - timedelta(days=7)
+            end_date = today
+        elif period == 'custom':
+            start_date = form.cleaned_data.get('start_date')
+            end_date = form.cleaned_data.get('end_date')
 
-    # Считаем, сколько из этих пациентов также посетили тренажерный зал
-    gym_attendance_count = Reception.objects.filter(
-        patient_name_id__in=patients_visited_doctor,
-        trainer__isnull=False,
-        comed=True,
-        is_confirmed=True,
-        date__gte=F('patient_name__reception__date')
-    ).distinct().count()
+            # Фильтрация приемов
+    receptions = Reception.objects.filter(
+        date__range=(start_date, end_date),
+        comed=True, is_confirmed=True
+    ) if start_date and end_date else Reception.objects.filter(
+        date__year=today.year,
+        comed=True, is_confirmed=True
+    )
 
+    # Подсчет общего количества записей
+    total_patients = receptions.count()
+
+    print('Total appointments:', total_patients)
 
     # Статистика по услугам
     service_stats = receptions.values('services__name').annotate(count=Count('services')).order_by('-count')
@@ -303,15 +412,71 @@ def annual_report(request):
         'data': [item['count'] for item in service_stats] if service_stats else [],
     }
 
+    # Статистика посещения тренажерного зала
+    gym_attendance_count = receptions.filter(trainer__isnull=False).count()
+
     context = {
-        'current_year': current_year,
-        'patient_count': receptions.count(),
+        'form': form,
+        'current_year': today.year,
+        'total_patients_count': total_patients,
         'gym_attendance_count': gym_attendance_count,
         'service_stats': service_stats,
         'service_data': service_data,
+        'start_date': start_date,
+        'end_date': end_date,
     }
-
     return render(request, 'main/treatment/annual_report.html', context)
+
+from django.http import HttpResponse
+from docx import Document
+from django.db.models import Count
+from io import BytesIO
+from datetime import datetime
+
+def download_word_report(request):
+    doc = Document()
+    start_date = request.POST.get('start_date')
+    end_date = request.POST.get('end_date')
+
+    # Форматирование дат
+    if start_date:
+        start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+    if end_date:
+        end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+
+    # Определение периода и заголовка документа
+    if start_date and end_date:
+        doc.add_heading(f'Отчет за период: {start_date} - {end_date}', 0)
+        receptions = Reception.objects.filter(date__range=(start_date, end_date), comed=True, is_confirmed=True)
+    else:
+        current_year = datetime.now().year
+        doc.add_heading(f'Годовой отчет за {current_year}', 0)
+        receptions = Reception.objects.filter(date__year=current_year, comed=True, is_confirmed=True)
+
+    total_patients = receptions.count()
+    doc.add_paragraph(f'Общее количество записей: {total_patients}')
+
+    services_stats = receptions.values('services__name').annotate(count=Count('services')).order_by('-count')
+    gym_stats = receptions.filter(trainer__isnull=False).values('trainer__name').annotate(count=Count('trainer')).order_by('-count')
+
+    doc.add_heading('Статистика по услугам:', level=1)
+    for service in services_stats:
+        doc.add_paragraph(f"{service['services__name']}: {service['count']}")
+
+    doc.add_heading('Статистика по тренажерам:', level=1)
+    for gym in gym_stats:
+        doc.add_paragraph(f"{gym['trainer__name']}: {gym['count']}")
+
+    # Сохраняем документ в памяти
+    file_stream = BytesIO()
+    doc.save(file_stream)
+    file_stream.seek(0)
+
+    # Отправляем файл пользователю
+    response = HttpResponse(file_stream.getvalue(), content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+    response['Content-Disposition'] = 'attachment; filename="annual_report.docx"'
+    return response
+
 
 @staff_member_required
 def unconfirmed_receptions_list(request):
@@ -382,19 +547,29 @@ class MedicalEquipmentListView(ListView):
 def equipment_detail(request, pk):
     equipment = get_object_or_404(MedicalEquipment, pk=pk)
     return render(request, 'main/MedicalEquipment/equipment_detail.html', {'equipment': equipment})  # Обновите путь к вашему шаблону
-
-
 class MakeAppointmentView(APIView):
     def post(self, request, *args, **kwargs):
-        print("Полученные данные:", request.data)  # Логирование полученных данных
+        print("Полученные данные на сервер:", request.data)
         serializer = ReceptionSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            print("Запись на прием успешно создана.")
             return Response({'success': True, 'message': 'Запись на прием успешно создана.'}, status=status.HTTP_201_CREATED)
         else:
-            print("Ошибки сериализации:", serializer.errors)  # Логирование ошибок сериализации
+            print("Ошибки сериализации:", serializer.errors)
             return Response({'success': False, 'errors': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import Service
+from .serializers import ServiceSerializer
+
+class ServiceListViewAPI(APIView):
+    def get(self, request, *args, **kwargs):
+        services = Service.objects.all()
+        serializer = ServiceSerializer(services, many=True, context={'request': request})
+        return Response(serializer.data)
 
 class CheckUserView(APIView):
     def post(self, request, *args, **kwargs):

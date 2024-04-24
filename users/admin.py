@@ -4,14 +4,14 @@ from .models import UserProfile
 
 class UserProfileAdmin(UserAdmin):
     # Укажите поля, которые хотите отобразить
-    list_display = ('email', 'full_name', 'is_staff',)
+    list_display = ('email', 'full_name', 'is_staff')
 
     # Настройка полей для формы редактирования
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('full_name',)}),
+        ('Personal info', {'fields': ('full_name',)}),  # Изменено здесь
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser',
-                                       'groups', 'user_permissions')}),
+                                    'groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )
 

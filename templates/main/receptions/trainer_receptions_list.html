@@ -1,0 +1,24 @@
+<!-- main/receptions/trainer_receptions_list.html -->
+{% extends 'main base.html' %}
+
+{% block content %}
+<div class="container mt-4" style="margin-top:175px">
+    <h1>Записи в зал</h1>
+    {% for date, receptions in receptions_by_date.items %}
+        <h3>{{ date }}</h3>
+        <div class="list-group">
+            {% for reception in receptions %}
+                <div class="list-group-item">
+                    <!-- Display details of each reception -->
+                    <p><strong>Время:</strong> {{ reception.time }}</p>
+                    <p><strong>Пациент:</strong> {{ reception.fullname_patient }}</p>
+                    <p><strong>Инструктор:</strong> {{ reception.trainer_name.name }}</p>
+                    <!-- Add more details as needed -->
+                </div>
+            {% endfor %}
+        </div>
+    {% empty %}
+        <p>На данный момент нет записей в зал</p>
+    {% endfor %}
+</div>
+{% endblock %}

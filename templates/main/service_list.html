@@ -1,30 +1,81 @@
 {% extends "main base.html" %}
 {% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
 
 {% block content %}
-<div class="servcices price-list-container" style="margin-top: 175px;">
-    <h1>Прайс лист</h1>
+<style>
+    .service-image {
+        height: 200px; /* Фиксированная высота */
+        width: 100%; /* Ширина соответствует ширине карточки */
+        object-fit: cover; /* Обрезать изображение, чтобы оно заполняло контейнер */
+    }
+</style>
+
+<div class="container my-5" style="margin-top: 175px;">
+    {% if LANGUAGE_CODE == 'ru' %}
+        <h1 class="text-center mb-4">Прайс-лист услуг</h1>
+
     {% if object_list %}
-    <table class="servcices price-list">
-        <tr>
-            <th>Название услуги</th>
-            <th>Об услуге</th>
-            <th>Цена, тг.</th>
-        </tr>
-        {% for service in object_list %}
-            <tr>
-                <td><a href="{% url 'main:service_detail' service.id %}">{{ service.name }}</a></td>
-                <td>{{ service.about }}.</td>
-                <td>{{ service.price }} тенге</td>
-            </tr>
-        {% endfor %}
-    </table>
+        <div class="row">
+            {% for service in object_list %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        {% if service.image %}
+                            <img src="{{ service.image.url }}" class="card-img-top service-image" alt="{{ service.name }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ service.name }}</h5>
+                            <p class="card-text">{{ service.about }}</p>
+                            <p class="card-text"><strong>Цена:</strong> {{ service.price }} тенге</p>
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     {% else %}
-        <p>No services available.</p>
+            <p class="text-center">Услуги отсутствуют.</p>
+    {% endif %}
+    {% elif LANGUAGE_CODE == 'kk' %}
+        <h1 class="text-center mb-4">Қызметтер тізімі</h1>
+    {% endif %}
+
+    {% if object_list %}
+        <div class="row">
+            {% for service in object_list %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        {% if service.image %}
+                            <img src="{{ service.image.url }}" class="card-img-top service-image" alt="{{ service.name }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ service.name }}</h5>
+                            <p class="card-text">{{ service.about }}</p>
+                            <p class="card-text"><strong>Цена:</strong> {{ service.price }} тенге</p>
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+            <p class="text-center">Услуги отсутствуют.</p>
+            <p class="text-center">Қызметтер жоқ.</p>
+    {% endif %}
+
+    {% if user.is_superuser %}
+        {% if LANGUAGE_CODE == 'ru' %}
+            <div class="text-center mt-4">
+                <a href="{% url 'main:service_create' %}" class="btn btn-success">Добавить услугу</a>
+            </div>
+        {% elif LANGUAGE_CODE == 'kk' %}
+            <div class="text-center mt-4">
+                <a href="{% url 'main:service_create' %}" class="btn btn-success">Қызмет қосу</a>
+            </div>
+        {% endif %}
     {% endif %}
 </div>
-       {% if user.is_superuser %}
-<a href="{% url 'main:service_create' %}">Create New Service</a>
-     {% else %}
-{% endif %}
 {% endblock %}

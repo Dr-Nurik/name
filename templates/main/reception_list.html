@@ -11,7 +11,7 @@
 
     {% if receptions_by_date %}
         {% for date, receptions in receptions_by_date.items %}
-            <h2>{{ date }}</h2>
+            <h1>{{ date }}</h1>
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
@@ -20,7 +20,6 @@
                             <th>Кто записался</th>
                             <th>Врач</th>
                             <th>Услуга</th>
-                            <th>Причина</th>
                             <th>Детали</th>
                         </tr>
                     </thead>
@@ -28,15 +27,15 @@
                         {% for reception in receptions %}
                             <tr>
                                 <td>{{ reception.time }}</td>
-                                <td>{{ reception.patient_name }}</td>
+                                <td>{{ reception.fullname_patient }}</td>
                                 <td>{{ reception.doctor.doctors_name.full_name }}</td>
                                 <td>
                                     {% for service in reception.services.all %}
                                         {{ service.name }}{% if not forloop.last %}, {% endif %}
                                     {% endfor %}
                                 </td>
-                                <td>{{ reception.patient_info }}</td>
-                                <td><a href="{% url 'main:reception_detail_for_doctor' reception.pk %}">Просмотр</a></td>
+                                  <td><a href="{% url 'main:reception_detail_for_doctor' reception.pk %}">Просмотр</a></td>
+
                             </tr>
                         {% endfor %}
                     </tbody>

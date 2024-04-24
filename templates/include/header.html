@@ -1,6 +1,10 @@
 {% load static %}
+{% load i18n %}
+
       <body class="clinic_version">
       <header>
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+
          <div class="header-top wow fadeIn">
             <div class="container">
                <a class="navbar-brand" href="{% url 'main:list_doctors' %}"><img src="{% static 'images/logo.png' %} " alt="image"></a>
@@ -8,75 +12,103 @@
                   <div class="header-info">
                      <div class="info-inner">
                         <span class="icontop"><img src="{% static 'images/phone-icon.png '%}" alt="#"></span>
-                        <span class="iconcont">+7777 777 77 77</span>
+                        <span class="iconcont">+77056449074</span>
                      </div>
                      <div class="info-inner">
-                        <span class="icontop"><i class="fa fa-envelope" aria-hidden="true"></i></span>
-                        <span class="iconcont"><a data-scroll href="mailto:muk888@mail.ru">muk888@mail.ru</a></span>
+                        <span class="icontop"><img src="{% static 'images/telegram-icon.png '%}" alt="#"></span>
+                        <a href="https://web.telegram.org/a/#5941668474"> <span class="iconcont">Telegramm_bot</span></a>
                      </div>
 
+                         <div class="info-inner">
+<form action="{% url 'set_language' %}" method="post">
+    {% csrf_token %}
+    <input name="next" type="hidden" value="{{ request.get_full_path }}">
+    <select name="language" onchange="this.form.submit()">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% get_available_languages as LANGUAGES %}
+        {% for language in LANGUAGES %}
+            <option value="{{ language.0 }}" {% if language.0 == LANGUAGE_CODE %} selected {% endif %}>
+                {{ language.1 }}
+            </option>
+        {% endfor %}
+    </select>
+</form>
+                                  </div>
                   </div>
                </div>
             </div>
          </div>
-         <div class="header-bottom wow fadeIn">
+      <div class="header-bottom wow fadeIn">
             <div class="container">
+               <nav class="main-menu">
+                  <div class="navbar-header">
+                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i class="fa fa-bars" aria-hidden="true"></i></button>
+                  </div>
 
-                <nav class="main-menu">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <i class="fa fa-bars" aria-hidden="true"></i>
-        </button>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-    <li><a class="active" href="{% url 'main:list_doctors' %}">Главная страница</a></li>
-    <li><a href="{% url 'main:list_doctors' %}#about">О НАС</a></li>
-    <li><a href="{% url 'main:list_doctors' %}#service">Услуги</a></li>
-    <li><a href="{% url 'main:list_doctors' %}#doctors">Доктора</a></li>
-    <li><a href="{% url 'main:list_doctors' %}#getintouch">Контакты</a></li>
+                  <div id="navbar" class="navbar-collapse collapse">
+                     <ul class="nav navbar-nav">
+<li><a class="active" href="{% url 'main:list_doctors' %}">{% trans "Главная страница" %}</a></li>
+    <li><a href="{% url 'main:list_doctors' %}#about">{% trans "О НАС" %}</a></li>
+    <li><a href="{% url 'main:service_list' %}">{% trans "Услуги" %}</a></li>
+    <li><a href="{% url 'main:list_doctors' %}#doctors">{% trans "Доктора" %}</a></li>
+    <li><a href="{% url 'main:list_doctors' %}#getintouch">{% trans "Контакты" %}</a></li>
 </ul>
-        <div class="my-dropdown">
-  <button class="dropbtn" onclick="myFunction()">Профиль<i class="fa fa-caret-down"></i></button>
-  <div class="my-dropdown-content" id="myDropdown">
              {% if user.is_superuser %}
-                        <li><a data-scroll href="{% url 'main:annual_report' %}">Отчеты</a></li>
-                        <li><a data-scroll href="{% url 'users:logout' %}">Выйти</a></li>
-                        <li><a data-scroll href="{% url 'main:reception_list' %}">Все записи</a></li>
-                        <li><a data-scroll href="{% url 'users:user_profile' %}">Профиль</a></li>
-                       <li><a data-scroll href="{% url 'main:service_list' %}">Услуги</a></li>
-                       <li><a data-scroll href="{% url 'main:unconfirmed_receptions_list' %}">Непотдвержденные записи</a></li>
-                       <li><a data-scroll href="{% url 'main:add_reception' %}">Добавить прием</a></li>
-                       <li><a data-scroll href="{% url 'main:medical_equipment_list' %}">Инвентарь</a></li>
-                          {% elif user.is_authenticated  %}
-                        <li><a data-scroll href="{% url 'users:user_profile' %}">Профиль</a></li>
-                         <li><a data-scroll href="{% url 'users:logout' %}">Выйти</a></li>
-                            {% else %}
-                        <li><a data-scroll href="{% url 'users:login' %}"> Войти</a></li>
-                        <li><a data-scroll href="{% url 'users:signup' %}">Регистрация</a></li>
+        <div class="my-dropdown">
+<button class="dropbtn" onclick="toggleDropdown('myDropdown1')">{% trans "Для админа" %}<i class="fa fa-caret-down"></i></button>
+  <div class="my-dropdown-content" id="myDropdown1">
+                       <li><a data-scroll href="{% url 'main:reception_list' %}">{% trans "Все записи" %}</a></li>
+                         <li><a data-scroll href="{% url 'main:unconfirmed_receptions_list' %}">{% trans "Непотдвержденные записи" %}</a></li>
+        <li><a data-scroll href="{% url 'main:add_reception' %}">{% trans "Добавить прием" %}</a></li>
+                                      <li><a data-scroll href="{% url 'main:service_list' %}">{% trans "Услуги" %}</a></li>
+                                      <li><a data-scroll href="{% url 'main:confirmed-receptions-for-trainer' %}">{% trans "Подтвержденные приемы для инструкторов" %}</a></li>
+                       <li><a data-scroll href="{% url 'main:medical_equipment_list' %}">{% trans "Инвентарь" %}</a></li>
+
+         <li><a data-scroll href="{% url 'main:annual_report' %}">{% trans "Отчеты" %}</a></li>
+           <li><a data-scroll href="{% url 'users:logout' %}">{% trans "Выйти" %}</a></li>
                             {% endif %}
             </div>
         </div>
-    </div>
-</nav>
+                    
+             {% if user.is_superuser %}
 
-            </div>
+                        <div class="my-dropdown">
+<button class="dropbtn" onclick="toggleDropdown('myDropdown2')">{% trans "Врач" %}<i class="fa fa-caret-down"></i></button>
+  <div class="my-dropdown-content" id="myDropdown2">
+                       <li><a data-scroll href="{% url 'main:reception_list' %}">{% trans "Все записи" %}</a></li>
+                                      <li><a data-scroll href="{% url 'main:service_list' %}">{% trans "Услуги" %}</a></li>
+                                      <li><a data-scroll href="{% url 'main:confirmed-and-arrived-receptions' %}">{% trans "Все прошедшие записи" %}</a></li>
+                                      <li><a data-scroll href="{% url 'main:confirmed-receptions-for-trainer' %}">{% trans "Записи для инструкторов" %}</a></li>
+                       <li><a data-scroll href="{% url 'main:medical_equipment_list' %}">{% trans "Инвентарь" %}</a></li>
+         <li><a data-scroll href="{% url 'main:annual_report' %}">{% trans "Отчеты" %}</a></li>
+           <li><a data-scroll href="{% url 'users:logout' %}">{% trans "Выйти" %}</a></li>
+                            {% endif %}
+    </div>
+                </div>
          </div>
       </header>
 
 <script>
-/* Когда пользователь нажимает на кнопку, переключаться раскрывает содержимое */
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
+function toggleDropdown(dropdownID) {
+    var dropdown = document.getElementById(dropdownID);
+    dropdown.classList.toggle("show");
 }
 
-// Закрыть раскрывающийся список, если пользователь щелкнет за его пределами.
-window.onclick = function(e) {
-  if (!e.target.matches('.dropbtn')) {
-  var myDropdown = document.getElementById("myDropdown");
-    if (myDropdown.classList.contains('show')) {
-      myDropdown.classList.remove('show');
+// Close dropdowns if the user clicks outside of them
+window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+        var dropdowns = document.getElementsByClassName("my-dropdown-content");
+        for (var i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+                openDropdown.classList.remove('show');
+            }
+        }
     }
-  }
 }
+</script>
+<script>
+    function changeLanguage() {
+        document.getElementById('languageForm').submit();
+    }
 </script>

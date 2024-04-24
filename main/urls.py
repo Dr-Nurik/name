@@ -3,8 +3,8 @@ from django.urls import path
 from . import views
 from .views import (
     ServiceUpdateView,
-    PatientMedicalHistoryUpdateView,
-    PatientFeedback,ReceptionView,
+confirmed_receptions_for_trainer,
+    ReceptionView,
     annual_report, DoctorDetailView,
     MakeAppointmentView,
 CheckUserView,
@@ -15,16 +15,15 @@ ServiceListView,
     ReceptionListView,
 MedicalEquipmentListView, equipment_detail,
 diagnosis_and_treatment_plan,
-DoctorsListView, ServicesListView,
-TrainingEquipmentsListView, MasseursListView)
+DoctorsListView, ServicesListView, ServiceListViewAPI,
+TrainingEquipmentsListView, MasseursListView,
+confirmed_and_arrived_receptions)
 
 app_name = 'main'
 
 urlpatterns = [
     path('', ReceptionView.as_view(), name='list_doctors'),
     path('services/update/<int:pk>/', ServiceUpdateView.as_view(), name='service_update'),
-    path('patient-history/update/<int:pk>/', PatientMedicalHistoryUpdateView.as_view(), name='patient_history_update'),
-    path('feedback/list/', PatientFeedback, name='feedback_list'),
     path('services/', ServiceListView.as_view(), name='service_list'),
     path('services/<int:pk>/', ServiceDetailView.as_view(), name='service_detail'),
     path('services/create/', ServiceCreateView.as_view(), name='service_create'),
@@ -43,12 +42,16 @@ urlpatterns = [
     path('receptions_detail/<int:pk>/', views.view_reception_detail, name='reception_detail_for_doctor'),
     path('medical-equipment/', MedicalEquipmentListView.as_view(), name='medical_equipment_list'),
     path('medical-equipment/<int:pk>/', equipment_detail, name='equipment_detail'),
+    path('confirmed_arrived/', confirmed_and_arrived_receptions, name='confirmed-and-arrived-receptions'),
+    path('trainer_receptions/', confirmed_receptions_for_trainer, name='confirmed-receptions-for-trainer'),
 
     path('api/make_appointment', MakeAppointmentView.as_view(), name='make_appointment'),
     path('api/check_user', CheckUserView.as_view(), name='check_user'),
     path('api/doctors', DoctorsListView.as_view(), name='doctors-list'),
-    path('api/services', ServicesListView.as_view(), name='services-list'),
+    path('api/services_api', ServiceListViewAPI.as_view(), name='services-list-api'),
+    path('api/services', views.ServiceListViewAPI.as_view(), name='services-list-api'),
     path('api/masseur', MasseursListView.as_view(), name='masseur-list'),
     path('api/training', TrainingEquipmentsListView.as_view(), name='training-list'),
+    path('download_word_report/', views.download_word_report, name='download_word_report'),
 
 ]

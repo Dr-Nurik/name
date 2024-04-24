@@ -6,22 +6,20 @@ from django.contrib.admin import widgets
 from django import forms
 from .models import Reception
 
+from django import forms
+from .models import Reception, Doctor, Masseur, TrainingEquipment, Service
+
 class ReceptionForm(forms.ModelForm):
-    non_registered_patient_name = forms.CharField(
+
+    fullname_patient = forms.CharField(
         max_length=255,
-        required=False,
-        label='Имя незарегистрированного пациента'
+        required=True,
+        label='ФИО пациента'
     )
-    non_registered_patient_contact = forms.CharField(
+    patient_contact = forms.CharField(
         max_length=255,
-        required=False,
-        label='Контактная информация'
-    )
-    service = forms.ModelMultipleChoiceField(
-        queryset=Service.objects.all(),
-        required=False,
-        label='Услуги',
-        widget=forms.CheckboxSelectMultiple()
+        required=True,
+        label='Контактная информация пациента'
     )
     doctor = forms.ModelChoiceField(
         queryset=Doctor.objects.all(),
@@ -29,20 +27,39 @@ class ReceptionForm(forms.ModelForm):
         label='Врач',
         empty_label="Выберите врача"
     )
+    masseur = forms.ModelChoiceField(
+        queryset=Masseur.objects.all(),
+        required=False,
+        label='Массажист',
+        empty_label="Выберите массажиста"
+    )
+    trainer = forms.ModelChoiceField(
+        queryset=TrainingEquipment.objects.all(),
+        required=False,
+        label='Тренажер',
+        empty_label="Выберите тренажер"
+    )
+    services = forms.ModelMultipleChoiceField(
+        queryset=Service.objects.all(),
+        required=True,
+        label='Услуги',
+        widget=forms.CheckboxSelectMultiple()
+    )
+    date = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}))
 
     class Meta:
         model = Reception
-        fields = ['date', 'service', 'doctor',
-                  'non_registered_patient_name', 'non_registered_patient_contact']
+        fields = ['date', 'fullname_patient', 'patient_contact', 'doctor', 'masseur', 'trainer', 'services']
         widgets = {
-            'date': forms.DateInput(attrs={'type': 'date'}),
-            'doctor': forms.Select()
+            'date': forms.DateInput(attrs={'type': 'date'})
+
         }
+
 
     def __init__(self, *args, **kwargs):
         super(ReceptionForm, self).__init__(*args, **kwargs)
         # Если у вас есть поле services, измените здесь на 'services'
-        self.fields['service'].required = False
+        self.fields['services'].required = False
         self.fields['doctor'].required = False
 
 
@@ -50,10 +67,10 @@ class ReceptionEditForm(forms.ModelForm):
     class Meta:
         model = Reception
         fields = [
-            'date', 'time', 'patient_name',
-            'non_registered_patient_name', 'non_registered_patient_contact',
-            'non_registered_patient_indevid_intevicat_nomer', 'services',
-            'doctor', 'trainer', 'requires_massage', 'masseur',
+            'date', 'time',
+            'fullname_patient', 'patient_contact',
+             'services',
+            'doctor', 'trainer', "trainer_name", 'requires_massage', 'masseur',
             'comed', 'declined', 'no_show', 'is_confirmed', 'payment_confirmed'
         ]
         widgets = {
@@ -62,7 +79,8 @@ class ReceptionEditForm(forms.ModelForm):
             'services': forms.SelectMultiple(),
             'doctor': forms.Select(),
             'trainer': forms.Select(),
-            'masseur': forms.Select()
+            'masseur': forms.Select(),
+            "trainer_name": forms.Select()
         }
 
         def __init__(self, *args, **kwargs):
@@ -110,13 +128,28 @@ class TimePeriodForm(forms.Form):
     start_date = forms.DateField(required=False)
     end_date = forms.DateField(required=False)
 
-from django import forms
-from .models import PatientFeedback
 
-class PatientFeedbackForm(forms.ModelForm):
+
+from django import forms
+
+class DateRangeForm(forms.Form):
+    PERIOD_CHOICES = [
+        ('year', 'Год'),
+        ('half_year', 'Полгода'),
+        ('quarter', 'Квартал'),
+        ('month', 'Месяц'),
+        ('week', 'Неделя'),
+        ('custom', 'Выбрать даты'),
+    ]
+
+    period = forms.ChoiceField(choices=PERIOD_CHOICES, required=True, label='Период')
+    start_date = forms.DateField(required=False, label='Начальная дата')
+    end_date = forms.DateField(required=False, label='Конечная дата')
+
+from django import forms
+from .models import Diagnosis
+
+class DiagnosisForm(forms.ModelForm):
     class Meta:
-        model = PatientFeedback
-        fields = ['feedback']
-        widgets = {
-            'feedback': forms.Textarea(attrs={'placeholder': 'Сообщение', 'required': 'required', 'rows': 5}),
-        }
+        model = Diagnosis
+        fields = ['diagnosis_text', 'treatment_text', 'date_prescribed']

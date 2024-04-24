@@ -1,0 +1,64 @@
+#: .\templates\include\header.html:36
+msgid "Главная страница"
+msgstr "Басты бет"
+
+#: .\templates\include\header.html:37
+msgid "О НАС"
+msgstr "Біз туралы"
+
+#: .\templates\include\header.html:38 .\templates\include\header.html:49
+#: .\templates\include\header.html:63
+msgid "Услуги"
+msgstr "Қызметтер"
+
+#: .\templates\include\header.html:39
+msgid "Доктора"
+msgstr "Мамандар"
+
+#: .\templates\include\header.html:40
+msgid "Контакты"
+msgstr "Байланысу"
+
+#: .\templates\include\header.html:43
+msgid "Для админа"
+msgstr "Администраторға"
+
+#: .\templates\include\header.html:46 .\templates\include\header.html:62
+msgid "Все записи"
+msgstr "Барлық жазбалар"
+
+#: .\templates\include\header.html:47
+msgid "Непотдвержденные записи"
+msgstr "Тіркелмеген жазбалар"
+
+#: .\templates\include\header.html:48
+msgid "Добавить прием"
+msgstr "Жазба қосу"
+
+#: .\templates\include\header.html:50
+msgid "Подтвержденные приемы для инструкторов"
+msgstr "Инструкторларға арналған жазбалар"
+
+#: .\templates\include\header.html:51 .\templates\include\header.html:66
+msgid "Инвентарь"
+msgstr "Инвентарь"
+
+#: .\templates\include\header.html:53 .\templates\include\header.html:67
+msgid "Отчеты"
+msgstr "Есептер"
+
+#: .\templates\include\header.html:54 .\templates\include\header.html:68
+msgid "Выйти"
+msgstr "Шығу"
+
+#: .\templates\include\header.html:59
+msgid "Врач"
+msgstr "Дәрігер"
+
+#: .\templates\include\header.html:64
+msgid "Все прошедшие записи"
+msgstr "Барлық өткен жазбалар"
+
+#: .\templates\include\header.html:65
+msgid "Записи для инструкторов"
+msgstr "Инструкторларға арналған жазбалар"

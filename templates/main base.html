@@ -18,6 +18,9 @@
  <link rel="shortcut icon" href="{% static 'images/fevicon.ico.png' %}" type="image/x-icon" />
     <link rel="apple-touch-icon" href="{% static 'images/apple-touch-icon.png' %}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{% static 'csss/bootstrap.min.css' %}">
@@ -34,7 +37,14 @@
     <link rel="stylesheet" href="{% static 'csss/custom.css' %}">
    <!-- Modernizer for Portfolio -->
 <script src="{% static 'jsa/modernizer.js' %}"></script>
+      <!-- all js files -->
+      <script src="{% static 'jsa/all.js' %}"></script>
+    <link rel="stylesheet" href="csss/bootstrap.min.css">
 
+   <link rel="stylesheet" href="css/custom.css">
+   <!-- Modernizer for Portfolio -->
+      <!-- all plugins -->
+      <script src="{% static 'jsa/custom.js' %}"></script>
   {% block extra_css %}{% endblock %}
   {% include "include/header.html" %}
 

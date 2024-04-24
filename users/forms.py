@@ -12,25 +12,23 @@ class CustomSignUpForm(UserCreationForm):
         help_text='Enter the date in the format DD.MM.YYYY', label='Дата рождения'
     )
 
-    phone = forms.CharField(max_length=15, required=True, label='Телефон номер')
     email = forms.EmailField(required=True, label='Электронная почта')
 
 
     class Meta:
         model = UserProfile
-        fields = ['email', 'full_name', 'address', 'date_of_birth', 'phone', 'password1', 'password2']
+        fields = ['email', 'full_name', 'address', 'date_of_birth', 'password1', 'password2']
 
 
 class UpdateUserForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['full_name', 'email', 'address', 'date_of_birth', 'phone']
+        fields = ['full_name', 'email', 'address', 'date_of_birth']
         widgets = {
             'full_name': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'address': forms.TextInput(attrs={'class': 'form-control'}),
             'date_of_birth': forms.DateInput(attrs={'class': 'form-control'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control'})
         }
 
 

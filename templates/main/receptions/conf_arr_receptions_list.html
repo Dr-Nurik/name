@@ -1,0 +1,76 @@
+{% extends 'main base.html' %}
+
+{% block content %}
+<div class="container my-5" style="margin-top:175px">
+    <!-- Search Form -->
+    <div class="row mb-4">
+        <div class="col">
+            <form method="get" action="{% url 'main:confirmed-and-arrived-receptions' %}" class="input-group">
+                <input type="text" name="search" value="{{ search_query }}" placeholder="Search..." class="form-control">
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Confirmed and Arrived Appointments Title -->
+    <h1 class="mb-4 text-center">Все прошедшие приемы</h1>
+
+    <!-- Appointments List -->
+    <div class="list-group">
+        {% for reception in receptions %}
+            <div class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ reception.fullname_patient }}</h5>
+                    <small>{{ reception.date }} - {{ reception.time }}</small>
+                </div>
+                <p class="mb-1">Doctor: {{ reception.doctors_name.full_name }}</p>
+                <p>Услуги:
+                    {% for service in reception.services.all %}
+                        <span class="badge badge-secondary">{{ service.name }}</span>
+                    {% empty %}
+                        <span class="badge badge-secondary">Услуга не выбрана</span>
+                    {% endfor %}
+                </p>
+                <!-- Diagnosis Notes -->
+                {% for diagnosis in diagnosis_list %}
+                    {% if diagnosis.reception.id == reception.id %}
+                        <div class="alert alert-secondary mt-2">
+                            <strong>Примечание:</strong> {{ diagnosis.date_prescribed }} - {{ diagnosis.diagnosis_text }}
+                            <a href="{% url 'main:diagnosis_and_treatment_plan' reception.id %}">View/Edit Notes</a>
+
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <a href="{% url 'main:reception_detail_for_doctor' reception.id %}" class="btn btn-info mt-2">View/Edit Notes</a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if receptions.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1&search={{ search_query }}">Первая страница</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ receptions.previous_page_number }}&search={{ search_query }}">Последняя страница</a>
+                </li>
+            {% endif %}
+            <li class="page-item disabled">
+                <span class="page-link">Страница {{ receptions.number }} из {{ receptions.paginator.num_pages }}</span>
+            </li>
+            {% if receptions.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ receptions.next_page_number }}&search={{ search_query }}">Следующая</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ receptions.paginator.num_pages }}&search={{ search_query }}">Предыдущая</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endblock %}

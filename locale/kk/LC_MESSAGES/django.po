@@ -1,0 +1,523 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-10 02:15+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: .\footprint\settings.py:158
+msgid "Russian"
+msgstr "Орысша"
+
+#: .\footprint\settings.py:159
+msgid "Kazakh"
+msgstr "Қазақша"
+
+#: .\main\models.py:40
+msgid "Наименование категории"
+msgstr "Мамандықтар атауы"
+
+#: .\main\models.py:45
+msgid "Специализация"
+msgstr "Мамандығы"
+
+#: .\main\models.py:46
+msgid "Специализаций"
+msgstr "Мамандықтар"
+
+#: .\main\models.py:49 .\main\models.py:76 .\main\models.py:102
+msgid "Профиль пользователя"
+msgstr "Пользователь профилі"
+
+#: .\main\models.py:50 .\main\models.py:78 .\main\models.py:105
+msgid "Категория специальности"
+msgstr "Мамандықтар категориясы"
+
+#: .\main\models.py:51 .\main\models.py:79
+msgid "Дата рождения врача"
+msgstr "Дәрігердің туған-күні"
+
+#: .\main\models.py:52 .\main\models.py:80
+msgid "Фотография врача"
+msgstr "Дәрігердің суреті"
+
+#: .\main\models.py:53 .\main\models.py:81
+msgid "Информация о враче"
+msgstr "Дәрігер туралы ақпарат"
+
+#: .\main\models.py:72 .\main\models.py:73
+msgid "Врачи"
+msgstr "Дәрігерлер"
+
+#: .\main\models.py:98 .\main\models.py:164
+msgid "Массажист"
+msgstr "Массажист"
+
+#: .\main\models.py:99
+msgid "Массажисты"
+msgstr "Массажисттар"
+
+#: .\main\models.py:106
+msgid "Дата рождения инструктура"
+msgstr "Инструктордың туған-күні"
+
+#: .\main\models.py:107
+msgid "Фотография инструктура"
+msgstr "Инструктордың суреті"
+
+#: .\main\models.py:108
+msgid "Информация о инструктура"
+msgstr "Инструктор туралы ақпарат"
+
+#: .\main\models.py:128 .\main\models.py:161
+msgid "Инструктор"
+msgstr "Инструктор"
+
+#: .\main\models.py:132
+msgid "Название тренажера"
+msgstr "Тренажерлар атауы"
+
+#: .\main\models.py:133 .\main\models.py:143 .\main\models.py:185
+#: .\main\models.py:209
+msgid "Описание"
+msgstr "Сипаттама"
+
+#: .\main\models.py:137 .\main\models.py:138
+msgid "Зал"
+msgstr "Зал"
+
+#: .\main\models.py:141
+msgid "Наименование услуги"
+msgstr "Қызмет атауы"
+
+#: .\main\models.py:142
+msgid "Фотография услуг"
+msgstr "Қызмет суреті"
+
+#: .\main\models.py:143
+msgid "No description provided"
+msgstr "Нақты ақпарат жоқ"
+
+#: .\main\models.py:144
+msgid "Цена"
+msgstr "Бағасы"
+
+#: .\main\models.py:144
+msgid "Уточняйте у администратора"
+msgstr "Администратордан нақтылаңыз"
+
+#: .\main\models.py:149
+msgid "Услуга"
+msgstr "Қызмет"
+
+#: .\main\models.py:150 .\main\models.py:159 .\templates\include\header.html:38
+#: .\templates\include\header.html:49 .\templates\include\header.html:63
+msgid "Услуги"
+msgstr "Қызметтер"
+
+#: .\main\models.py:155
+msgid "Дата приема"
+msgstr "Қабылдау күні"
+
+#: .\main\models.py:156
+msgid "Время приема"
+msgstr "Қабылдау уақыты"
+
+#: .\main\models.py:157
+msgid "ФИО пациента"
+msgstr "Келушінің ФИО"
+
+#: .\main\models.py:158
+msgid "Контакты пациента"
+msgstr "Келушінің телефон нөмері"
+
+#: .\main\models.py:160
+msgid "Доктор"
+msgstr "Дәрігер"
+
+#: .\main\models.py:162
+msgid "Тренажер"
+msgstr "Тренажер"
+
+#: .\main\models.py:163
+msgid "Требуется массаж"
+msgstr "Массажды қажет етеді"
+
+#: .\main\models.py:165
+msgid "Пациент прибыл"
+msgstr "Пациент келді"
+
+#: .\main\models.py:166
+msgid "Пациент отказался"
+msgstr "Пациент келуден бас тартты"
+
+#: .\main\models.py:167
+msgid "Пациент не пришел"
+msgstr "Пациент келген жоқ"
+
+#: .\main\models.py:168
+msgid "Подтверждение записи"
+msgstr "Жазба қабылданды"
+
+#: .\main\models.py:169
+msgid "Подтверждение оплаты"
+msgstr "Төлем жасалынды"
+
+#: .\main\models.py:177
+msgid "Приемы"
+msgstr "Қабылдаулар"
+
+#: .\main\models.py:178 .\main\models.py:183
+msgid "Прием"
+msgstr "Қабылдау"
+
+#: .\main\models.py:184
+msgid "Текст"
+msgstr "Текст"
+
+#: .\main\models.py:186
+msgid "Дата назначения"
+msgstr "Тағайындалған күні"
+
+#: .\main\models.py:191
+msgid "Примечание"
+msgstr "Ескерту"
+
+#: .\main\models.py:192
+msgid "Примечаний"
+msgstr "Ескерту"
+
+#: .\main\models.py:201
+msgid "Наименование оборудования"
+msgstr "Жабдықтың атауы"
+
+#: .\main\models.py:202
+msgid "Инвентарный номер"
+msgstr "Түгендеу нөмірі"
+
+#: .\main\models.py:204
+msgid "Рабочее"
+msgstr "Жұмыс істейді"
+
+#: .\main\models.py:204
+msgid "Статус"
+msgstr "Статус"
+
+#: .\main\models.py:205
+msgid "Дата последнего обслуживания"
+msgstr "Соңғы қызмет көрсету күні"
+
+#: .\main\models.py:206
+msgid "Изображение"
+msgstr "Сурет"
+
+#: .\main\models.py:208
+msgid "Количество"
+msgstr "Саны"
+
+#: .\main\models.py:210
+msgid "Дата приобретение"
+msgstr "Сатып алу күні"
+
+#: .\main\models.py:236 .\templates\include\header.html:51
+#: .\templates\include\header.html:66
+msgid "Инвентарь"
+msgstr "Инвентарь"
+
+#: .\main\models.py:237
+msgid "Инвентаризация"
+msgstr "Инвентаризация"
+
+#: .\main\models.py:241
+msgid "Дата обслуживания"
+msgstr "Қызмет көрсету күні"
+
+#: .\main\models.py:242
+msgid "Описание обслуживания"
+msgstr "Қызмет сипаттамасы"
+
+#: .\main\models.py:244
+msgid "Обслуживание"
+msgstr "Қызмет көрсету"
+
+#: .\main\models.py:245
+msgid "Обслуживании"
+msgstr "Қызмет көрсету"
+
+#: .\main\views.py:84
+msgid "Здоровый След"
+msgstr "Сау із"
+
+#: .\main\views.py:84
+msgid "Ортопедический центр!"
+msgstr "Ортопедиялық орталық!"
+
+#: .\templates\include\header.html:36
+msgid "Главная страница"
+msgstr "Басты бет"
+
+#: .\templates\include\header.html:37
+msgid "О НАС"
+msgstr "Біз туралы"
+
+#: .\templates\include\header.html:39
+msgid "Доктора"
+msgstr "Мамандар"
+
+#: .\templates\include\header.html:40
+msgid "Контакты"
+msgstr "Байланысу"
+
+#: .\templates\include\header.html:43
+msgid "Для админа"
+msgstr "Администраторға"
+
+#: .\templates\include\header.html:46 .\templates\include\header.html:62
+msgid "Все записи"
+msgstr "Барлық жазбалар"
+
+#: .\templates\include\header.html:47
+msgid "Непотдвержденные записи"
+msgstr "Тіркелмеген жазбалар"
+
+#: .\templates\include\header.html:48
+msgid "Добавить прием"
+msgstr "Жазба қосу"
+
+#: .\templates\include\header.html:50
+msgid "Подтвержденные приемы для инструкторов"
+msgstr "Инструкторларға арналған жазбалар"
+
+#: .\templates\include\header.html:53 .\templates\include\header.html:67
+msgid "Отчеты"
+msgstr "Есептер"
+
+#: .\templates\include\header.html:54 .\templates\include\header.html:68
+msgid "Выйти"
+msgstr "Шығу"
+
+#: .\templates\include\header.html:59
+msgid "Врач"
+msgstr "Дәрігер"
+
+#: .\templates\include\header.html:64
+msgid "Все прошедшие записи"
+msgstr "Барлық өткен жазбалар"
+
+#: .\templates\include\header.html:65
+msgid "Записи для инструкторов"
+msgstr "Инструкторларға арналған жазбалар"
+
+#: .\templates\main\main.html:41
+msgid "О клинике"
+msgstr "Центр жайлы"
+
+#: .\templates\main\main.html:45
+msgid ""
+"Здоровый след, ортопедический центр: адреса со входами на карте, отзывы, "
+"фото, номера телефонов, время работы и как доехать."
+msgstr ""
+"Здоровый след, ортопедический центр: мекен-жайы мен есіктерінің картаға "
+"салынуы, пікірлер, фотосуреттер, телефон нөмірлері, жұмыс уақыты және қалай "
+"жетуге болады."
+
+#: .\templates\main\main.html:53
+msgid "График работы"
+msgstr "Жұмыс кестесі"
+
+#: .\templates\main\main.html:56
+msgid "Понедельник - Пятница"
+msgstr "Дүйсенбі - Жұма"
+
+#: .\templates\main\main.html:57
+msgid "Суббота"
+msgstr "Сенбі"
+
+#: .\templates\main\main.html:58
+msgid "Воскресенье"
+msgstr "Жексенбі"
+
+#: .\templates\main\main.html:69
+msgid "О записи в центр"
+msgstr "Орталыққа жазу туралы"
+
+#: .\templates\main\main.html:70
+msgid ""
+"После отправки вашей заявки на прием, администратор клиники свяжется с вами "
+"для уточнения деталей и подтверждения даты и времени приема. Мы стремимся "
+"предоставить удобное время для каждого нашего пациента и гарантировать "
+"качественное обслуживание."
+msgstr ""
+
+#: .\templates\main\main.html:79
+msgid "О нас"
+msgstr "Біз туралы"
+
+#: .\templates\main\main.html:85
+msgid "Кто и что мы делаем"
+msgstr "Біз кім және не істейміз"
+
+#: .\templates\main\main.html:86
+msgid "Чем занимается наш центр"
+msgstr "Біздің орталық не істейді"
+
+#: .\templates\main\main.html:87
+msgid ""
+" Наш центр специализируется на комплексе ортопедических услуг. Мы предлагаем "
+"комплексные ортопедические обследования и лечение, адаптированные к "
+"индивидуальным потребностям пациента. Ключевым аспектом нашего ухода "
+"является создание индивидуальных ортопедических стелек, предназначенных для "
+"оптимальной поддержки и комфорта. Кроме того, мы предлагаем обширные "
+"реабилитационные программы, тщательно структурированные для помощи в "
+"восстановлении и улучшении подвижности. Пациенты проходят реабилитацию "
+"непосредственно в нашем центре, под пристальным наблюдением наших "
+"квалифицированных специалистов, обеспечивая эффективный и "
+"персонализированный уход на протяжении всего пути выздоровления."
+msgstr ""
+"Біздің орталығымыз ортопедиялық қызметтерге мамандандырылған. Біз науқастың "
+"жеке қажеттіліктеріне бейімделген, кешенді ортопедиялық тексеру және емдеу "
+"ұсынамыз. Біздің күтімнің негізгі бөлігі – жеке ортопедиялық стелектер "
+"жасау, олар оптималды қолдау және жайлылықты қамтамасыз етеді. Сонымен "
+"қатар, біздің орталықта мамандарымыздың қатаң бақылауымен қалпына келтіру "
+"және қозғалыс қабілетін жақсартуға арналған кең көлемді реабилитациялық "
+"бағдарламалар ұсынамыз."
+
+#: .\templates\main\main.html:111
+msgid " Тренажеры для кинезитерапии"
+msgstr "Кинезитерапияға арналған тренажерлер"
+
+#: .\templates\main\main.html:121
+msgid " Скамьи для тренажеров"
+msgstr "Тренажерларға арналған орындықтар"
+
+#: .\templates\main\main.html:131
+msgid " Аппараты плантографии"
+msgstr "Плантография аппаратты"
+
+#: .\templates\main\main.html:141
+msgid " Подставка для гантелей"
+msgstr "Гантель тірегі"
+
+#: .\templates\main\main.html:158
+msgid " Современные тренжеры "
+msgstr "Тренажерлар атауы"
+
+#: .\templates\main\main.html:159
+msgid " Оснащенный новейшими аппаратами кинезиотерапии"
+msgstr "Кинезитерапияға арналған тренажерлер"
+
+#: .\templates\main\main.html:165
+msgid "Фокус на здравоохранении"
+msgstr "Денсаулыққа көңіл бөлеміз"
+
+#: .\templates\main\main.html:166
+msgid "Фокусуруемся на здоровье в индивидуальных планах"
+msgstr "Жеке денсаулыққа көңіл бөлеміз"
+
+#: .\templates\main\main.html:172
+
+msgid "Превосходные специалисты"
+msgstr "Біздің мамандар"
+
+#: .\templates\main\main.html:173
+msgid "Лучшие специалисты в кинезотерапии"
+msgstr "Кинезитерапияға арналған тренажерлер"
+
+#: .\templates\main\main.html:179
+msgid "Заботимся даже о детей"
+msgstr "Балаларға көңіл бөлеміз"
+
+#: .\templates\main\main.html:180
+msgid "Заботимся о детях с "
+msgstr "Балаларға көңіл бөлеміз"
+
+#: .\templates\main\main.html:186
+msgid "Методы без лекарств"
+msgstr "Дәрі дәрмексіз емдеу тәсілдері"
+
+#: .\templates\main\main.html:187
+msgid "Безлекарственные методы терапии"
+msgstr "Дәрі дәрмексіз емдеу тәсілдері"
+
+#: .\templates\main\main.html:193
+msgid "Не операционные и медикаментозные лечений"
+msgstr "Дәрі дәрмексіз емдеу тәсілдері"
+
+#: .\templates\main\main.html:194
+msgid "Безопасные процедуры, без боли"
+msgstr "Дәрі дәрмексіз емдеу тәсілдері"
+
+#: .\templates\main\main.html:200
+msgid "Запись к врачу"
+msgstr "Дәрігерге жазылу"
+
+#: .\templates\main\main.html:210
+msgid "Ваше имя"
+msgstr "Сіздің атыңыз"
+
+#: .\templates\main\main.html:217
+msgid "Контактная информация"
+msgstr "Байланыс ақпараты"
+
+#: .\templates\main\main.html:226
+msgid "Выберите врача"
+msgstr "Дәрігерді таңдаңыз"
+
+#: .\templates\main\main.html:230
+msgid "Врачи недоступны"
+msgstr "Дәрігерлер қол жетімді емес"
+
+#: .\templates\main\main.html:240
+msgid "Выберите тренажер"
+msgstr "Тренажерды таңдаңыз"
+
+#: .\templates\main\main.html:244
+msgid "Тренажеры недоступны"
+msgstr "Тренажерлар қол жетімді емес"
+
+#: .\templates\main\main.html:254
+msgid "Выберите массажиста"
+msgstr "Массажисті таңдаңыз"
+
+#: .\templates\main\main.html:258
+msgid "Массажисты недоступны"
+msgstr "Массажистар қол жетімді емес"
+
+#: .\templates\main\main.html:267
+msgid "Отправить"
+msgstr "Жіберу"
+
+#: .\templates\main\main.html:289
+msgid "Наши специалисты"
+msgstr "Біздің мамандар"
+
+#: .\users\models.py:17
+msgid "Email должен быть установлен"
+msgstr ""
+
+#: .\users\models.py:32
+msgid "Superuser должен иметь is_staff=True."
+msgstr ""
+
+#: .\users\models.py:34
+msgid "Superuser должен иметь is_superuser=True."
+msgstr ""
+
+#~ msgid "Администрирование Здорового Следа"
+#~ msgstr "Сау Із - басқару бөлімі"
+
+#~ msgid "Здоровый След - панель управления"
+#~ msgstr "Сау із - басқару тақтасы"

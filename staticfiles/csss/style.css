@@ -194,3 +194,12 @@ border: 2px solid #fff;
 	margin-bottom:40px;
 }
 
+.professional-image {
+   width: 100%;  /* or any specific width */
+    height: 200px; /* or any specific height */
+    object-fit: cover;
+    border-radius: 50%; /* Optional: for rounded images */
+        border-radius: 0;  /* Removes rounded corners */
+
+}
+

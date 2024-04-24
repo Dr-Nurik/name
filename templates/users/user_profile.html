@@ -7,7 +7,7 @@
 {% block content %}
 <div class="container mt-5" style="margin-top: 175px;">
     <h1>Личный кабинет</h1>
-
+     {{ user.telegram_id }} или  {{ user.phone }}
     <section class="profile-section">
         <h2>Изменение персональных данных</h2>
 
@@ -35,6 +35,7 @@
             <div class="form-group">
                 <label for="address">Адрес:</label>
                 <input type="text" class="form-control" id="address" name="address" value="{{ user.address }}">
+
                 {% for error in user_form.address.errors %}
                 <span class="text-danger">{{ error }}</span>
                 {% endfor %}
@@ -71,23 +72,24 @@
     <div class="receptions-section mt-5">
         <h2>Мои приемы</h2>
         <ul class="list-group">
-            {% for reception in receptions %}
-            <li class="list-group-item">
-                <h5 class="mt-0 mb-1">Дата: {{ reception.date }}</h5>
-                <p>Время: {{ reception.time }}</p>
-                <p>Доктор: {{ reception.doctor.doctors_name.full_name }}</p>
-                <p>Причина: {{ reception.patient_info }}</p>
-                <p>Услуги:
-                    <ul class="list-unstyled">
-                        {% for service in reception.services.all %}
-                        <li>{{ service.name }}</li>
-                        {% endfor %}
-                    </ul>
-                </p>
-            </li>
-            {% empty %}
-            <li>У вас нет запланированных приемов.</li>
-            {% endfor %}
+{% for reception, diagnosis in reception_diagnosis_pairs %}
+    <li class="list-group-item">
+        <h5 class="mt-0 mb-1">Дата: {{ reception.date }}</h5>
+        <p>Время: {{ reception.time }}</p>
+        <p>Доктор: {{ reception.doctor.doctors_name.full_name }}</p>
+        <p>Причина: {{ reception.patient_info }}</p>
+                {% for service in reception.services.all %}
+        <p>Услуги: {{ service.name }}
+
+                {% endfor %}
+        </p>
+        {% if diagnosis %}
+            <p>Диагноз: {{ diagnosis.diagnosis_text }}</p>
+            <p>Лечение: {{ diagnosis.treatment_text }}</p>
+        {% endif %}
+    </li>
+{% endfor %}
+
         </ul>
     </div>
 </div>

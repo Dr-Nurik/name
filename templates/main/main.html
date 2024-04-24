@@ -1,5 +1,6 @@
 {% extends "main base.html" %}
 {% load static %}
+{% load i18n %}
 
     {% block title %}
       {{ block.super }}Главная страница{{doctor.name|safe}}
@@ -9,14 +10,16 @@
 
 
 
-      <div id="home" class="parallax first-section wow fadeIn" data-stellar-background-ratio="0.4" style="background-image:url('{% static 'images/slider-bg.png' %}');">
+      <div id="home" class="parallax first-section wow fadeIn" data-stellar-background-ratio="0.4" style="background-image:url('{% static 'images/slider-bg.jpg' %}');">
          <div class="container">
             <div class="row">
                <div class="col-md-12 col-sm-12">
                   <div class="text-contant">
                      <h2>
-                        <span class="center"><span class="icon"><img src="{% static 'images/icon-logo.png' %}" alt="#" /></span></span>
-                        <a href="" class="typewrite" data-period="2000" data-type='[ "Здоровый след" , "Ортопедический кабинет!" ]'>
+
+<a href="" class="typewrite" data-period="2000" data-type='{{ data_types_json|safe }}'>
+
+
                         <span class="wrap"></span>
                         </a>
                      </h2>
@@ -34,8 +37,12 @@
                <div class="row">
                   <div class="service-time one" style="background:#2895f1;">
                      <span class="info-icon"><i class="fa fa-ambulance" aria-hidden="true"></i></span>
-                     <h3>О клинике</h3>
-                     <p>Здоровый след, ортопедический кабинет: адреса со входами на карте, отзывы, фото, номера телефонов, время работы и как доехать.</p>
+
+    <h3>{% trans "О клинике" %}</h3>
+
+
+
+                     <p>{% trans 'Здоровый след, ортопедический центр: адреса со входами на карте, отзывы, фото, номера телефонов, время работы и как доехать.' %}</p>
                   </div>
                </div>
             </div>
@@ -43,14 +50,15 @@
                <div class="row">
                   <div class="service-time middle" style="background:#0071d1;">
                      <span class="info-icon"><i class="fa fa-hourglass" aria-hidden="true"></i></span>
-                     <h3>График работы</h3>
-                     <div class="time-table-section">
+                     <h3>{% trans 'График работы' %}</h3>
+                         <div class="time-table-section">
                         <ul>
-                           <li><span class="left">Понедельник - Пятница</span><span class="right">8.00 – 18.00</span></li>
-                           <li><span class="left">Суббота</span><span class="right">8.00 – 16.00</span></li>
-                           <li><span class="left">Воскресенье</span><span class="right">8.00 – 13.00</span></li>
+                           <li><span class="left">{% trans "Понедельник - Пятница" %} </span><span class="right">8.00 – 18.00</span></li>
+                           <li><span class="left">{% trans "Суббота" %}</span><span class="right">8.00 – 16.00</span></li>
+                           <li><span class="left">{% trans 'Воскресенье' %}</span><span class="right">8.00 – 13.00</span></li>
                         </ul>
                      </div>
+
                   </div>
                </div>
             </div>
@@ -58,8 +66,8 @@
                <div class="row">
                   <div class="service-time three" style="background:#0060b1;">
                      <span class="info-icon"><i class="fa fa-hospital" aria-hidden="true"></i></span>
-                     <h3>О записи в клинику</h3>
-                     <p>ЧТО ТО ПРО ЧТО ТАМ ПРО ЛЯП ТАПАЛЯ ТО ЛЯПОТА</p>
+                     <h3>{% trans 'О записи в центр' %}</h3>
+<p>{% trans 'После отправки вашей заявки на прием, администратор клиники свяжется с вами для уточнения деталей и подтверждения даты и времени приема.' %}</p>
                   </div>
                </div>
             </div>
@@ -68,27 +76,28 @@
       <div id="about" class="section wow fadeIn">
          <div class="container">
             <div class="heading">
-               <span class="icon-logo"><img src="{% static 'images/icon-logo.png' %}" alt="#"></span>
-               <h2>О нас</h2>
+               <h2>{% trans 'О нас' %}</h2>
             </div>
             <!-- end title -->
             <div class="row">
                <div class="col-md-6">
                   <div class="message-box">
-                     <h4>Кто и что мы делаем</h4>
-                     <h1>Чем занимается наш кабинет</h1>
-                     <p class="lead">LOREM IPSUM и рыба текст </p>
-                     <p> LOREM IPSUM и рыба текст </p>
+                     <h4>{% trans 'Кто и что мы делаем' %} </h4>
+                     <h1>{% trans 'Чем занимается наш центр' %} </h1>
+                     <p class="lead">{% trans ' Наш центр специализируется на комплексе ортопедических услуг. Мы предлагаем комплексные ортопедические обследования и лечение, адаптированные к индивидуальным потребностям пациента. Ключевым аспектом нашего ухода является создание индивидуальных ортопедических стелек, предназначенных для оптимальной поддержки и комфорта. Кроме того, мы предлагаем обширные реабилитационные программы, тщательно структурированные для помощи в восстановлении и улучшении подвижности. Пациенты проходят реабилитацию непосредственно в нашем центре, под пристальным наблюдением наших квалифицированных специалистов, обеспечивая эффективный и персонализированный уход на протяжении всего пути выздоровления.' %} </p>
                      <a href="{% url 'main:service_list' %}" data-scroll class="btn btn-light btn-radius btn-brd grd1 effect-1">Подробнее о наших услугах</a>
                   </div>
                   <!-- end messagebox -->
                </div>
                <!-- end col -->
                <div class="col-md-6">
-                  <div class="post-media wow fadeIn">
-                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqwS1TJtaSM5q2ssRsBOpcge6ykCt87uBKRZyw3icRBcfFzrh6hedEyPtekjrMd7wpgG8&usqp=CAU" alt="" class="img-responsive">
-                     <a href="https://www.instagram.com/reel/Cj2XT8Tobns/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" data-rel="prettyPhoto[gal]" class="playbutton"><i class="flaticon-play-button"></i></a>
-                  </div>
+             <div class="post-media wow fadeIn">
+    <video width="500" height="450" controls>
+        <source src="{% static 'video/Video.mp4' %}" type="video/mp4">
+        Ваш браузер не поддерживает видео тег.
+    </video>
+</div>
+
                   <!-- end media -->
                </div>
                <!-- end col -->
@@ -102,7 +111,7 @@
                         <a href="{% static 'images/clinic_01.jpg' %}" data-rel="prettyPhoto[gal]" class="hoverbutton global-radius"><i class="flaticon-unlink"></i></a>
                         <img src="{% static 'images/clinic_01.jpg' %}" alt="" class="img-responsive">
                      </div>
-                     <h3>Современное оборудование</h3>
+                     <h3>{% trans ' Тренажеры для кинезитерапии' %}</h3>
                   </div>
                   <!-- end service -->
                </div>
@@ -112,7 +121,7 @@
                         <a href="{% static 'images/clinic_02.jpg' %}" data-rel="prettyPhoto[gal]" class="hoverbutton global-radius"><i class="flaticon-unlink"></i></a>
                         <img src="{% static 'images/clinic_02.jpg' %}" alt="" class="img-responsive">
                      </div>
-                     <h3>Удобный кабинет для обследование</h3>
+                     <h3>{% trans ' Скамьи для тренажеров' %}</h3>
                   </div>
                   <!-- end service -->
                </div>
@@ -122,17 +131,17 @@
                         <a href="{% static 'images/clinic_03.jpg' %}" data-rel="prettyPhoto[gal]" class="hoverbutton global-radius"><i class="flaticon-unlink"></i></a>
                         <img src="{% static 'images/clinic_03.jpg' %}" alt="" class="img-responsive">
                      </div>
-                     <h3>Высококласные специалисты</h3>
+                     <h3>{% trans ' Аппараты плантографии' %}</h3>
                   </div>
                   <!-- end service -->
                </div>
                <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="service-widget">
                      <div class="post-media wow fadeIn">
-                        <a href="{% static 'images/clinic_01.jpg' %}" data-rel="prettyPhoto[gal]" class="hoverbutton global-radius"><i class="flaticon-unlink"></i></a>
-                        <img src="{% static 'images/clinic_01.jpg' %}" alt="" class="img-responsive">
+                        <a href="{% static 'images/clinic_04.jpg' %}" data-rel="prettyPhoto[gal]" class="hoverbutton global-radius"><i class="flaticon-unlink"></i></a>
+                        <img src="{% static 'images/clinic_04.jpg' %}" alt="" class="img-responsive">
                      </div>
-                     <h3>Лечение без лекарств</h3>
+                     <h3>{% trans ' Подставка для гантелей' %}</h3>
                   </div>
                   <!-- end service -->
                </div>
@@ -149,100 +158,125 @@
                      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                         <div class="serv">
                            <span class="icon-service"><img src="{% static 'images/service-icon1.png' %}" alt="#" /></span>
-                           <h4>Современные аппараты</h4>
-                           <p>Lorem Ipsum is simply dummy text of the printing.</p>
+                           <h4>{% trans ' Современные тренжеры '%}</h4>
+                           <p>{% trans ' Оснащенный новейшими аппаратами кинезиотерапии' %}</p>
                         </div>
                      </div>
                      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                         <div class="serv">
                            <span class="icon-service"><img src="{% static 'images/service-icon2.png' %} " alt="#" /></span>
-                           <h4>Забота о здоровье</h4>
-                           <p>Lorem Ipsum is simply dummy text of the printing.</p>
+                           <h4>{% trans 'Фокус на здравоохранении' %}</h4>
+                           <p>{% trans 'Фокусуруемся на здоровье в индивидуальных планах' %}</p>
                         </div>
                      </div>
                      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                         <div class="serv">
                            <span class="icon-service"><img src="{% static 'images/service-icon3.png' %}" alt="#" /></span>
-                           <h4>Превосходный специалист</h4>
-                           <p>Lorem Ipsum is simply dummy text of the printing.</p>
+                           <h4>{% trans 'Превосходные специалисты' %}</h4>
+                           <p>{% trans "Лучшие специалисты в кинезотерапии" %}</p>
                         </div>
                      </div>
                      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                         <div class="serv">
                            <span class="icon-service"><img src="{% static 'images/service-icon4.png' %}" alt="#" /></span>
-                           <h4>Заботимся даже о детей</h4>
-                           <p>Lorem Ipsum is simply dummy text of the printing.</p>
+                           <h4>{% trans 'Заботимся даже о детей' %}</h4>
+                           <p>{% trans "Заботимся о детях с " %}</p>
                         </div>
                      </div>
                      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                         <div class="serv">
                            <span class="icon-service"><img src="{% static 'images/service-icon5.png' %}" alt="#" /></span>
-                           <h4>Методы без лекарств</h4>
-                           <p>Lorem Ipsum is simply dummy text of the printing.</p>
+                           <h4>{% trans 'Методы без лекарств' %}</h4>
+                           <p>{% trans "Безлекарственные методы терапии" %}</p>
                         </div>
                      </div>
                      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                         <div class="serv">
                            <span class="icon-service"><img src="{% static 'images/service-icon6.png' %}" alt="#" /></span>
-                           <h4>КРОВИ НЕ БУДЕТ</h4>
-                           <p>Lorem Ipsum is simply dummy text of the printing.</p>
+                           <h4>{% trans 'Не операционные и медикаментозные лечений' %}</h4>
+                           <p>{% trans "Безопасные процедуры, без боли" %}</p>
                         </div>
                      </div>
                   </div>
-               </div>
-               <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-                  <div class="appointment-form">
-                     <h3><span>+</span> Записи к врачу</h3>
-<div class="form">
-<form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <fieldset>
-        <!-- User Authentication Section -->
-        <div class="form-group">
-            {% if request.user.is_authenticated %}
-                <p>{{ request.user.full_name }}</p>
-            {% else %}
-                <input type="text" name="non_registered_patient_name" placeholder="Your Name" class="form-control" />
-                <input type="text" name="non_registered_patient_contact" placeholder="Contact" class="form-control" />
-            {% endif %}
+               </div><div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="appointment-form">
+        <h3><span>+</span> {% trans 'Запись к врачу' %}</h3>
+        <div class="form">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <fieldset>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="form-group"><div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="form-group">
+<input type="text" name="fullname_patient" placeholder="{% trans 'Ваше имя' %}" class="form-control form-control-lg" style="width: 100%; height: 50px; font-size: 18px;" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="form-group">
+<input type="text" name="patient_contact" placeholder="{% trans 'Контактная информация' %}" class="form-control form-control-lg" style="width: 100%; height: 50px; font-size: 18px;" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="form-group">
+                                <select class="form-control form-control-lg" name="doctor">
+                                    <option value="">{% trans 'Выберите врача' %}</option>
+                                    {% for doctor in doctors_list %}
+                                        <option value="{{ doctor.id }}">{{ doctor.doctors_name.full_name }}</option>
+                                    {% empty %}
+                                        <option>{% trans 'Врачи недоступны' %}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="form-group">
+                                <select class="form-control form-control-lg" name="trainer">
+                                    <option value="">{% trans 'Выберите тренажер' %}</option>
+                                    {% for trainer in trainer_list %}
+                                        <option value="{{ trainer.id }}">{{ trainer.name }}</option>
+                                    {% empty %}
+                                        <option>{% trans 'Тренажеры недоступны' %}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="form-group">
+                                <select class="form-control form-control-lg" name="masseur">
+                                    <option value="">{% trans 'Выберите массажиста' %}</option>
+                                    {% for masseur in masseur_list %}
+                                        <option value="{{ masseur.id }}">{{ masseur.masseur_name.full_name }}</option>
+                                    {% empty %}
+                                        <option>{% trans 'Массажисты недоступны' %}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="center"><button type="submit" class="btn btn-primary btn-lg">{% trans 'Отправить' %}</button></div>
+                            </div>
+                        </div>
+                    </div>            </div>            </div>
+                </fieldset>
+            </form>
         </div>
+    </div>
+</div>
 
-        <!-- Service and Doctor Selection -->
-        <div class="form-group">
-            <select class="form-control" name="service">
-                {% for service in services_list %}
-                    <option value="{{ service.id }}">{{ service.name }}</option>
-                {% empty %}
-                    <option>No services available</option>
-                {% endfor %}
-            </select>
-            <select class="form-control" name="doctor">
-            {% for doctor in doctors_list %}
-    <option value="{{ doctor.id }}">{{ doctor.doctors_name.full_name }}</option>
-{% empty %}
-    <option>No doctors available</option>
-{% endfor %}
-            </select>
-        </div>
-
-        <!-- Date and Time Selection -->
-        <div class="form-group">
-            <label for="date">Дата приема</label>
-            <input type="date" id="date" name="date" class="form-control">
-        </div>
-
-
-        <!-- Submit Button -->
-        <div class="form-group">
-            <div class="center"><button type="submit" class="btn btn-primary">Submit</button></div>
-        </div>
-    </fieldset>
-</form>
-
-</div>  </div>
-
-                     </div>
-                  </div>
                </div>
             </div>
          </div>
@@ -255,36 +289,105 @@
         <div class="container">
 		
 		<div class="heading">
-               <span class="icon-logo"><img src="{% static 'images/icon-logo.png' %}" alt="#"></span>
-               <h2>Наши специалисты</h2>
+               <h2>{% trans 'Наши специалисты' %}</h2>
             </div>
 
-            <div class="row dev-list text-center">
+<div class="row dev-list text-center">
     {% for doctor in doctors_list %}
         {% if doctor.image %}
             <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s" style="visibility: visible; animation-duration: 1s; animation-delay: 0.2s; animation-name: fadeIn;">
                 <div class="widget clearfix">
                     <!-- Doctor's Image -->
-                    <img src="{{ doctor.image.url }}" alt="{{ doctor.full_name }}" class="img-responsive img-rounded">
+                    <img src="{{ doctor.image.url }}" alt="{{ doctor.doctors_name.full_name  }}" class="img-responsive img-rounded professional-image">
 
                     <!-- Doctor's Info -->
                     <div class="widget-title">
-                        <h3>{{ doctor.doctors_name.full_name }}</h3>
+                        <h3>{{ doctor.doctors_name.full_name  }}</h3> <!-- Make sure this matches the method name in your model -->
                         <small>{{ doctor.specialization_category }}</small>
                     </div>
                     <p>{{ doctor.bio }}</p>
 
                     <!-- Social Media Links -->
                     <div class="footer-social">
-                        <a href="#" class="btn grd1"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="btn grd1"><i class="fab fa-github"></i></a>
-                        <a href="#" class="btn grd1"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="btn grd1"><i class="fab fa-linkedin"></i></a>
+                        {% if doctor.facebook_url %}
+                            <a href="{{ doctor.facebook_url }}" class="btn grd1"><i class="fab fa-facebook-f"></i></a>
+                        {% endif %}
+                        {% if doctor.twitter_url %}
+                            <a href="{{ doctor.twitter_url }}" class="btn grd1"><i class="fab fa-twitter"></i></a>
+                        {% endif %}
+                        {% if doctor.linkedin_url %}
+                            <a href="{{ doctor.linkedin_url }}" class="btn grd1"><i class="fab fa-linkedin-in"></i></a>
+                        {% endif %}
+                        {% if doctor.instagram_url %}
+                            <a href="{{ doctor.instagram_url }}" class="btn grd1"><i class="fab fa-instagram"></i></a>
+                        {% endif %}
+                        <!-- Add more social media platforms as needed -->
                     </div>
                 </div><!-- widget -->
             </div><!-- end col -->
         {% endif %}
     {% endfor %}
+    {% for masseur in masseur_list %}
+  {% if masseur.image %}
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
+        <div class="widget clearfix">
+            <img src="{{ masseur.image.url }}" alt="{{ masseur.masseur_name.full_name }}" class="img-responsive img-rounded professional-image">
+            <div class="widget-title">
+                <h3>{{ masseur.masseur_name.full_name }}</h3>
+                <small>{{ masseur.specialization_category }}</small>
+            </div>
+            <p>{{ masseur.bio }}</p>
+            <!-- Social Media Links -->
+                    <div class="footer-social">
+                        {% if masseur.facebook_url %}
+                            <a href="{{ masseur.facebook_url }}" class="btn grd1"><i class="fab fa-facebook-f"></i></a>
+                        {% endif %}
+                        {% if masseur.twitter_url %}
+                            <a href="{{ masseur.twitter_url }}" class="btn grd1"><i class="fab fa-twitter"></i></a>
+                        {% endif %}
+                        {% if masseur.linkedin_url %}
+                            <a href="{{ masseur.linkedin_url }}" class="btn grd1"><i class="fab fa-linkedin-in"></i></a>
+                        {% endif %}
+                        {% if masseur.instagram_url %}
+                            <a href="{{ masseur.instagram_url }}" class="btn grd1"><i class="fab fa-instagram"></i></a>
+                        {% endif %}
+                        <!-- Add more social media platforms as needed -->
+                    </div>
+        </div>
+    </div>
+  {% endif %}
+{% endfor %}
+{% for trainer in trainers_list %}
+    {% if trainer.image %}
+        <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
+            <div class="widget clearfix">
+                <img src="{{ trainer.image.url }}" alt="{{ trainer.trainer_name.full_name }}" class="img-responsive img-rounded professional-image">
+                <div class="widget-title">
+                    <h3>{{ trainer.trainer_name.full_name }}</h3>
+                    <small>{{ trainer.specialization_category }}</small>
+                </div>
+                <p>{{ trainer.bio }}</p>
+            <!-- Social Media Links -->
+                    <div class="footer-social">
+                        {% if trainer.facebook_url %}
+                            <a href="{{ trainer.facebook_url }}" class="btn grd1"><i class="fab fa-facebook-f"></i></a>
+                        {% endif %}
+                        {% if trainer.twitter_url %}
+                            <a href="{{ trainer.twitter_url }}" class="btn grd1"><i class="fab fa-twitter"></i></a>
+                        {% endif %}
+                        {% if trainer.linkedin_url %}
+                            <a href="{{ trainer.linkedin_url }}" class="btn grd1"><i class="fab fa-linkedin-in"></i></a>
+                        {% endif %}
+                        {% if trainer.instagram_url %}
+                            <a href="{{ trainer.instagram_url }}" class="btn grd1"><i class="fab fa-instagram"></i></a>
+                        {% endif %}
+                        <!-- Add more social media platforms as needed -->
+                    </div>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
+
 </div><!-- row -->
 
                     </div><!--widget -->
@@ -292,7 +395,7 @@
             </div><!-- end row -->
         </div><!-- end container -->
     </div>
-	  
+
 
                         <!-- end row -->
                      </div>
@@ -307,49 +410,13 @@
             </div>
          </div>
       </div>
-	  
+
 	  <!-- end doctor section -->
 
       <div id="getintouch" class="section wb wow fadeIn" style="padding-bottom:0;">
 
          <div class="contact-section">
-            <div class="form-contant">
-            <form id="ajax-contact" method="post">
-    {% csrf_token %}
-                  <div class="row">
-                     <div class="col-md-6">
-                        <div class="form-group in_name">
-                           <input type="text" class="form-control" placeholder="ФИО" required="required">
-                        </div>
-                     </div>
-                     <div class="col-md-6">
-                        <div class="form-group in_email">
-                           <input type="email" class="form-control" placeholder="E-mail" required="required">
-                        </div>
-                     </div>
-                     <div class="col-md-6">
-                        <div class="form-group in_email">
-                           <input type="tel" class="form-control" id="phone" placeholder="Номер телефона" required="required">
-                        </div>
-                     </div>
-                     <div class="col-md-6">
-                        <div class="form-group in_email">
-                           <input type="text" class="form-control" id="subject" placeholder="Тема" required="required">
-                        </div>
-                     </div>
-                     <div class="col-md-12">
-                        <div class="form-group in_message">
-                             {{ form.feedback }}
-                           <textarea class="form-control" id="message" rows="5" placeholder="Сообщение" required="required"></textarea>
-                        </div>
-                        <div class="actions">
-                                           <input type="submit" value="Send Message" name="submit" id="submitButton" class="btn small" title="Submit Your Message!">
 
-                        </div>
-                     </div>
-                  </div>
-               </form>
-            </div>
             <div id="googleMap" style="width:10%;height:450px;">
                  <a class="dg-widget-link" href="http://2gis.kz/karaganda/firm/70000001063060624/center/72.96620249748231,50.04934763090384/zoom/17?utm_medium=widget-source&utm_campaign=firmsonmap&utm_source=bigMap">Посмотреть на карте Караганды</a>
                 <div class="dg-widget-link"><a href="http://2gis.kz/karaganda/firm/70000001063060624/photos/70000001063060624/center/72.96620249748231,50.04934763090384/zoom/17?utm_medium=widget-source&utm_campaign=firmsonmap&utm_source=photos">Фотографии компании</a></div>
@@ -361,7 +428,6 @@
             </div>
          </div>
       </div>
-
       <!-- end copyrights -->
       <a href="#home" data-scroll class="dmtop global-radius"><i class="fa fa-angle-up"></i></a>
       <!-- all js files -->

@@ -1,16 +1,37 @@
 {% extends "main base.html" %}
 {% load static %}
+{% load i18n %}
+{% block content %}
+          {% get_current_language as LANGUAGE_CODE %}
 
+                        {% if LANGUAGE_CODE == 'ru' %}
     {% block title %}
       {{ block.super }}Главная страница{{doctor.name|safe}}
     {% endblock %}
-{% block content %}
+
+
 <head>
     <br><br><br><br><br><br><br>
 
 </head>
 <body>
     <h1>Запись на приём</h1>
-    <p>Ваш запрос на запись отправлен и ожидает подтверждения.</p>
+    <p>Ваш запрос на запись отправлен и ожидает подтверждения, с вами свяжется администратор для дальнейшего уточнение по записи</p>
 </body>
-    {% endblock %}
+
+
+        {% elif LANGUAGE_CODE == 'kk' %}
+      {{ block.super }}Басты бет{doctor.name|safe}}
+
+<head>
+    <br><br><br><br><br><br><br>
+
+</head>
+<body>
+    <h1>Жазылу</h1>
+    <p>
+"Сіздің жазылу өтінішіңіз қабылданды және растауды күтуде, тіркеу туралы нақтырақ ақпаратты нақтылау үшін әкімші сізбен хабарласады."</p>
+</body>
+    {% endif %}
+
+{% endblock %}

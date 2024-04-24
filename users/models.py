@@ -42,12 +42,9 @@ class UserProfile(AbstractUser):
         ('жен', 'Женщина'),
     ]
     username = None  # Убедитесь, что username полностью удалено
-
     full_name = models.CharField("ФИО", max_length=100)
     address = models.CharField("Адрес", max_length=200)
     email = models.EmailField("Электронная почта", unique=True)
-
-    phone = models.CharField("Телефон", max_length=15, unique=True)
     date_of_birth = models.DateField("Дата рождения", null=True, blank=True)
     gender = models.CharField("Пол", max_length=10, choices=GENDER_CHOICES, null=True, blank=True)
 

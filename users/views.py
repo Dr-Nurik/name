@@ -32,7 +32,7 @@ from .models import UserProfile
 from django.http import Http404
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from main.models import Reception
+from main.models import Reception, Diagnosis
 
 
 
@@ -57,9 +57,13 @@ def register(request):
 from django.contrib.auth.decorators import login_required
 
 def user_profile(request):
+
     user = request.user
-    receptions = Reception.objects.filter(patient_name=user, comed=False, declined=False, no_show=False)
+    receptions = Reception.objects.filter(patient_name=user, comed=True, declined=False, no_show=False)
+    diagnoses = {diagnosis.reception_id: diagnosis for diagnosis in Diagnosis.objects.filter(reception__in=receptions)}
     upcoming_reception = receptions.filter(date__gte=datetime.now()).first()  # Получение ближайшего будущего приема
+
+    reception_diagnosis_pairs = [(reception, diagnoses.get(reception.id)) for reception in receptions]
 
     if request.method == 'POST':
         user_form = UpdateUserForm(request.POST, instance=request.user)
@@ -77,15 +81,26 @@ def user_profile(request):
     else:
         user_form = UpdateUserForm(instance=user)
 
-
     context = {
-        'user': user,
+        'user_profile': user_profile,
+        'reception_diagnosis_pairs': reception_diagnosis_pairs,
         'receptions': receptions,
+        'diagnoses': diagnoses,
         'upcoming_reception': upcoming_reception,
         'user_form': user_form,
     }
 
     return render(request, 'users/user_profile.html', context)
+
+def diagnosis_detail(request, reception_id):
+    try:
+        diagnosis = Diagnosis.objects.get(reception_id=reception_id)
+    except Diagnosis.DoesNotExist:
+        # Обработка случая, когда диагноз не найден
+        messages.error(request, "Диагноз для указанного приема не найден.")
+        return redirect('users:user_profile')
+
+    return render(request, 'users:diagnosis_detail.html', {'diagnosis': diagnosis})
 
 
 # accounts/views.py
@@ -139,7 +154,10 @@ def csrf_token_endpoint(request):
 
 @login_required
 def my_receptions(request):
-    return render(request, 'users/my_receptions.html', {'reception': Reception})
+    return render(request, 'users/diagnosis_detail.html', {'reception': Reception})
+
+
+
 
 
 from django.contrib.auth.views import PasswordResetView
@@ -216,4 +234,3 @@ class SendTempPassword(APIView):
             return Response({"temp_password": temp_password}, status=status.HTTP_200_OK)
 
         return Response({"error": "Пользователь не найден."}, status=status.HTTP_404_NOT_FOUND)
-

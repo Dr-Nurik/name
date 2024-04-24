@@ -9,9 +9,11 @@ from .views import csrf_token_endpoint, RecoverAccount, SendTempPassword, Custom
 app_name = 'users'
 urlpatterns = [
 
- path("signup/", views.register, name="signup"),
- path('profile/', user_profile, name='user_profile'),
- path('login/', user_login, name='login'),
+    path("signup/", views.register, name="signup"),
+    path('profile/', user_profile, name='user_profile'),
+    path('reception/<int:reception_id>/diagnosis/', views.diagnosis_detail, name='diagnosis_detail'),
+
+    path('login/', user_login, name='login'),
     path('logout/', user_logout, name='logout'),
     path('api/recover', RecoverAccount.as_view(), name='recover-account'),
     path('api/send-temp-password', SendTempPassword.as_view(), name='send-temp-password'),
@@ -21,6 +23,5 @@ urlpatterns = [
 
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
  path('csrf_token_endpoint/', csrf_token_endpoint, name='csrf_token_endpoint'),
-
 
 ]

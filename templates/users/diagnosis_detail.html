@@ -1,0 +1,9 @@
+
+{% block content %}
+<div class="container">
+    <h1>Диагноз</h1>
+    <p><strong>Текст диагноза:</strong> {{ diagnosis.diagnosis_text }}</p>
+    <p><strong>Описание лечения:</strong> {{ diagnosis.treatment_text }}</p>
+    <p><strong>Дата назначения:</strong> {{ diagnosis.date_prescribed }}</p>
+</div>
+{% endblock %}
